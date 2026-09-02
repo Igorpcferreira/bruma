@@ -1,0 +1,7 @@
+# A BRUMA é peça conceitual da Kyber Tech e pode ser indexada: a experiência funciona no
+# celular (breakpoint em 899 px, com poses e enquadramento próprios), diferente da Casa Umbra.
+User-agent: *
+Allow: /
+Disallow: /prototipo/
+
+Sitemap: https://bruma-portfolio.vercel.app/sitemap.xml

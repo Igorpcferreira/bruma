@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Karla:wght@300..700&amp;family=JetBrains+Mono:wght@400;500&amp;family=Orbitron:wght@800&amp;display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html, body { margin: 0; background: #0E0F11; overflow-x: clip; }
+    body { color: #D9D9E3; font-family: Karla, system-ui, sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    a { color: #D9D9E3; text-decoration: none; }
+    a:hover { color: #D9A57F; }
+    ::selection { background: #B86B3A; color: #0E0F11; }
+    h1, h2, h3, p, figure, ul { margin: 0; }
+    h1, h2, h3, p { text-wrap: pretty; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; }
+    a:focus-visible, button:focus-visible { outline: 1px solid #D9A57F; outline-offset: 5px; }
+    @keyframes brumaSobe { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    @keyframes brumaPulso { 0%, 100% { transform: scaleY(.35); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #0E0F11; color: #D9D9E3; font-family: Karla, system-ui, sans-serif;">
+  <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: block; pointer-events: none;"></canvas>
+  <sc-if value="{{ semCena }}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; background: radial-gradient(60% 50% at 50% 42%, rgba(74,78,140,.5), rgba(14,15,17,0) 70%), #0E0F11;"></div>
+  </sc-if>
+
+  <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 18px clamp(20px, 5vw, 72px); pointer-events: none; background: linear-gradient(to bottom, rgba(14,15,17,.75), rgba(14,15,17,0));">
+    <a href="#topo" style="pointer-events: auto; display: inline-flex; align-items: baseline; gap: 10px; white-space: nowrap; font-family: Italiana, Georgia, serif; font-size: 20px; letter-spacing: .28em; color: #F1F0F4;">BRUMA <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">/ 02</span></a>
+    <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; color: rgba(217,217,227,.62); white-space: nowrap;">{{ secLabel }}</span>
+    </sc-if>
+    <div style="display: flex; align-items: center; gap: 28px;">
+      <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+        <nav aria-label="Seções" style="display: flex; gap: 22px; pointer-events: auto;">
+          <a href="#botanicos" style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: rgba(217,217,227,.72);" style-hover="color: #F1F0F4;">Botânicos</a>
+          <a href="#destilacao" style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: rgba(217,217,227,.72);" style-hover="color: #F1F0F4;">Destilação</a>
+          <a href="#colecao" style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: rgba(217,217,227,.72);" style-hover="color: #F1F0F4;">Coleção</a>
+          <a href="#bastidores" style="font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #D9A57F;" style-hover="color: #F1F0F4;">Bastidores</a>
+        </nav>
+      </sc-if>
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .2em; color: rgba(217,217,227,.55); white-space: nowrap;">PROJETO CONCEITUAL</span>
+    </div>
+  </header>
+
+  <main id="conteudo" style="position: relative; z-index: 2;">
+
+    <section id="topo" data-bruma-sec data-screen-label="00 · O frasco" style="position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding: 0 clamp(20px, 5vw, 72px) clamp(72px, 11vh, 128px);">
+      <h1 style="position: absolute; left: 50%; top: 46%; transform: translate(-50%, -50%); font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(84px, 19vw, 280px); letter-spacing: .08em; line-height: 1; color: #D9D9E3; white-space: nowrap; pointer-events: none; transition: opacity .6s; opacity: {{ titleOpacity }};">BRUMA</h1>
+      <div style="position: relative; max-width: 36rem; animation: brumaSobe .9s cubic-bezier(.22, 1, .36, 1) .2s both;">
+        <p style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F;">Destilaria conceitual · Cerrado goiano · Estudo digital 2026</p>
+        <p style="margin-top: 18px; font-family: Italiana, Georgia, serif; font-size: clamp(30px, 3.4vw, 48px); line-height: 1.08; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65);">Gin do Cerrado. Violeta no frasco, rosé no copo.</p>
+        <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-top: 30px;">
+          <a href="#colecao" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s;" style-hover="background: #B86B3A; color: #0E0F11; border-color: #B86B3A;">Ver os três frascos</a>
+          <a href="#bastidores" style="display: inline-flex; align-items: center; min-height: 46px; padding: 0 6px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(217,217,227,.7); transition: color .3s;" style-hover="color: #D9A57F;">Como isso foi feito</a>
+        </div>
+      </div>
+      <div aria-hidden="true" style="position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none;">
+        <i style="display: block; width: 1px; height: 32px; background: linear-gradient(#B86B3A, rgba(184,107,58,0)); transform-origin: top; animation: brumaPulso 2.4s cubic-bezier(.22, 1, .36, 1) infinite;"></i>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .24em; color: rgba(217,217,227,.55);">ROLE</span>
+      </div>
+    </section>
+
+    <section id="nevoa" data-bruma-sec data-screen-label="01 · A névoa" style="position: relative; min-height: 100vh; display: flex; align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 14vh;">
+      <div style="max-width: 44rem;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">01 · A névoa</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.4vw, 64px); line-height: 1.06; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Toda madrugada, o Cerrado solta uma névoa fina sobre o capim. Foi ela que deu nome ao gin.</h2>
+        <p data-reveal style="margin-top: 28px; max-width: 46ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Destilado em alambique de cobre, em lotes de 300 litros, com botânicos colhidos a menos de 200 km da destilaria. O violeta vem da flor fada-azul e vai embora no primeiro gole de tônica: o copo fica rosé.</p>
+      </div>
+    </section>
+
+    <section id="botanicos" data-bruma-sec data-screen-label="02 · Botânicos" style="position: relative; min-height: 100vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(32px, 5vw, 96px); align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 14vh;">
+      <div>
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">02 · Seis botânicos</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.08; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Zimbro, porque gin exige. Cerrado, porque a Bruma insiste.</h2>
+        <p data-reveal style="margin-top: 24px; max-width: 42ch; font-size: 16px; line-height: 1.65; color: rgba(217,217,227,.75); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Cinco dos seis botânicos chegam de cooperativas de Pirenópolis e de Alto Paraíso. O zimbro vem da Macedônia, como em quase todo gin do mundo.</p>
+      </div>
+      <div data-reveal style="opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">01</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #F1F0F4;">Zimbro</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">A espinha dorsal. Resina, pinho e um final seco.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">02</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #F1F0F4;">Pequi</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">Só o caroço, tostado. Nota untuosa e quente, sem a polpa.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">03</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #F1F0F4;">Baru</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">Castanha do Cerrado, tosta leve. Fundo amanteigado.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">04</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #F1F0F4;">Capim-limão</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">O frescor que abre o gole antes do zimbro chegar.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">05</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #F1F0F4;">Laranja-da-terra</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">Casca seca ao sol. Amargor cítrico, de quintal goiano.</p>
+        </div>
+        <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 18px; padding: 18px 0; border-top: 1px solid rgba(217,217,227,.12); border-bottom: 1px solid rgba(217,217,227,.12); align-items: baseline;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">06</b>
+          <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 34px); line-height: 1.1; color: #A9B0F0;">Flor fada-azul</h3>
+          <p style="grid-column: 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.62);">Dá o violeta. Encontra a tônica e vira rosé em segundos.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="destilacao" data-bruma-sec data-screen-label="03 · Destilação" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 54vh clamp(20px, 5vw, 72px) 14vh;">
+      <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">03 · Do alambique ao frasco</p>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: clamp(24px, 3vw, 48px); margin-top: 26px;">
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 18px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .05s, transform .9s cubic-bezier(.22, 1, .36, 1) .05s;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">01</b>
+          <h3 style="margin-top: 10px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Maceração · 24 horas</h3>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.7);">Os botânicos descansam no álcool de cereais antes do fogo. O pequi entra por último, só o caroço.</p>
+        </div>
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 18px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">02</b>
+          <h3 style="margin-top: 10px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Destilação · cobre</h3>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.7);">Uma passagem só, lenta. O cobre segura o enxofre e deixa o aroma passar.</p>
+        </div>
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 18px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">03</b>
+          <h3 style="margin-top: 10px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(24px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Repouso · 21 dias</h3>
+          <p style="margin-top: 10px; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.7);">O destilado espera em inox até a névoa assentar. Só então a flor entra e tinge o frasco.</p>
+        </div>
+      </div>
+      <div data-reveal style="display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-top: 40px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .3s, transform .9s cubic-bezier(.22, 1, .36, 1) .3s;">
+        <span aria-hidden="true" style="display: block; width: 12px; height: 12px; border-radius: 50%; background: #4E52A8; box-shadow: 0 0 14px rgba(78,82,168,.9);"></span>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.7);">VIOLETA NO FRASCO</span>
+        <i aria-hidden="true" style="display: block; width: 38px; height: 1px; background: linear-gradient(90deg, #4E52A8, #CC6F8E);"></i>
+        <span aria-hidden="true" style="display: block; width: 12px; height: 12px; border-radius: 50%; background: #CC6F8E; box-shadow: 0 0 14px rgba(204,111,142,.9);"></span>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.7);">ROSÉ NO COPO</span>
+      </div>
+    </section>
+
+    <section id="colecao" data-bruma-sec data-screen-label="04 · Três frascos" style="position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: flex-end; padding: 58vh clamp(20px, 5vw, 72px) 12vh; background: linear-gradient(to top, rgba(14,15,17,.92) 0%, rgba(14,15,17,.7) 38%, rgba(14,15,17,0) 62%);">
+      <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">04 · Três frascos</p>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(10px, 3vw, 48px); margin-top: 22px;">
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 16px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .05s, transform .9s cubic-bezier(.22, 1, .36, 1) .05s;">
+          <span aria-hidden="true" style="display: block; width: 10px; height: 10px; border-radius: 50%; background: #4E52A8; box-shadow: 0 0 14px rgba(78,82,168,.9);"></span>
+          <h3 style="margin-top: 14px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(18px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Bruma Original</h3>
+          <p style="margin-top: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.55);">44% · 750 ML</p>
+          <p style="margin-top: 10px; font-size: clamp(12px, 1.2vw, 14px); line-height: 1.5; color: rgba(217,217,227,.68);">Zimbro, pequi e flor fada-azul. O violeta que vira rosé.</p>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+            <span style="font-size: clamp(15px, 1.6vw, 19px); font-weight: 600; color: #F1F0F4; font-variant-numeric: tabular-nums;">R$ 189</span>
+            <a href="#fecho" style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s;" style-hover="background: #B86B3A; color: #0E0F11;">Reservar</a>
+          </div>
+        </div>
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 16px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+          <span aria-hidden="true" style="display: block; width: 10px; height: 10px; border-radius: 50%; background: #CC6F8E; box-shadow: 0 0 14px rgba(204,111,142,.9);"></span>
+          <h3 style="margin-top: 14px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(18px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Bruma Rosé</h3>
+          <p style="margin-top: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.55);">42% · 750 ML</p>
+          <p style="margin-top: 10px; font-size: clamp(12px, 1.2vw, 14px); line-height: 1.5; color: rgba(217,217,227,.68);">Infusão de cagaita e hibisco depois da destilação. Doce só no nariz.</p>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+            <span style="font-size: clamp(15px, 1.6vw, 19px); font-weight: 600; color: #F1F0F4; font-variant-numeric: tabular-nums;">R$ 199</span>
+            <a href="#fecho" style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s;" style-hover="background: #B86B3A; color: #0E0F11;">Reservar</a>
+          </div>
+        </div>
+        <div data-reveal style="border-top: 1px solid rgba(217,217,227,.12); padding-top: 16px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <span aria-hidden="true" style="display: block; width: 10px; height: 10px; border-radius: 50%; background: #B9772F; box-shadow: 0 0 14px rgba(185,119,47,.9);"></span>
+          <h3 style="margin-top: 14px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(18px, 2.4vw, 32px); line-height: 1.1; color: #F1F0F4;">Bruma Reserva</h3>
+          <p style="margin-top: 6px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.55);">46% · 750 ML</p>
+          <p style="margin-top: 10px; font-size: clamp(12px, 1.2vw, 14px); line-height: 1.5; color: rgba(217,217,227,.68);">Seis meses em barril de amburana. Baunilha, canela e madeira quente.</p>
+          <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 18px;">
+            <span style="font-size: clamp(15px, 1.6vw, 19px); font-weight: 600; color: #F1F0F4; font-variant-numeric: tabular-nums;">R$ 249</span>
+            <a href="#fecho" style="display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 10px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s;" style-hover="background: #B86B3A; color: #0E0F11;">Reservar</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servir" data-bruma-sec data-screen-label="05 · Como servir" style="position: relative; background: #0E0F11; padding: clamp(96px, 16vh, 160px) clamp(20px, 5vw, 72px);">
+      <div style="max-width: 40rem;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">05 · Como servir</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.08; color: #F1F0F4; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Gelo grande, tônica seca e nada de canudo.</h2>
+        <p data-reveal style="margin-top: 22px; max-width: 44ch; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.7); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Três receitas da casa. A primeira é a que muda de cor na frente de quem bebe.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(16px, 2.4vw, 32px); margin-top: clamp(40px, 6vh, 64px);">
+        <figure data-reveal style="opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .05s, transform .9s cubic-bezier(.22, 1, .36, 1) .05s;">
+          <div style="aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; background: #15161A;">
+            <img src="https://images.unsplash.com/photo-1675370734208-120b43d3c7ac?auto=format&amp;fit=crop&amp;w=1200&amp;q=70" alt="Copo balão com gin e tônica, rodelas de limão e um ramo de alecrim." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Bruma &amp; Tônica</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.5);">50 ML · TÔNICA SECA · ALECRIM</span>
+          </figcaption>
+        </figure>
+        <figure data-reveal style="opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+          <div style="aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; background: #15161A;">
+            <img src="https://images.unsplash.com/photo-1592757242171-0bdf87f7d370?auto=format&amp;fit=crop&amp;w=1200&amp;q=70" alt="Taça com drinque rosé e morango fatiado sobre mesa de madeira." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Sour de cagaita</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.5);">BRUMA ROSÉ · CAGAITA · CLARA</span>
+          </figcaption>
+        </figure>
+        <figure data-reveal style="opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <div style="aspect-ratio: 4 / 5; overflow: hidden; border-radius: 4px; background: #15161A;">
+            <img src="https://images.unsplash.com/photo-1637518122612-60ac167cf93b?auto=format&amp;fit=crop&amp;w=1200&amp;q=70" alt="Copo baixo com gin puro e gelo sobre mesa de madeira." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Puro, gelado</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.5);">BRUMA RESERVA · UMA PEDRA</span>
+          </figcaption>
+        </figure>
+      </div>
+      <figure data-reveal style="position: relative; margin-top: clamp(48px, 8vh, 96px); aspect-ratio: 21 / 9; min-height: 340px; overflow: hidden; border-radius: 4px; background: #15161A; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">
+        <img src="https://images.unsplash.com/photo-1445140463371-d8036feedc2f?auto=format&amp;fit=crop&amp;w=2000&amp;q=70" alt="Detalhe de um alambique de cobre, com a superfície refletindo luz quente." loading="lazy" decoding="async" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;">
+        <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(14,15,17,.92), rgba(14,15,17,.15) 60%);"></div>
+        <figcaption style="position: absolute; left: clamp(20px, 4vw, 48px); right: clamp(20px, 4vw, 48px); bottom: clamp(20px, 4vw, 48px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px;">
+          <div style="max-width: 36rem;">
+            <p style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F;">Visite a destilaria</p>
+            <h3 style="margin-top: 12px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(26px, 3.4vw, 50px); line-height: 1.06; color: #F1F0F4;">O alambique trabalha aos sábados. A porta fica aberta.</h3>
+            <p style="margin-top: 10px; font-size: 14px; line-height: 1.6; color: rgba(217,217,227,.7);">Serra dos Pireneus, Goiás · Visitas às 10h e às 15h, com degustação.</p>
+          </div>
+          <a href="#fecho" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s;" style-hover="background: #B86B3A; color: #0E0F11; border-color: #B86B3A;">Agendar visita</a>
+        </figcaption>
+      </figure>
+      <p style="margin-top: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; color: rgba(217,217,227,.4);">FOTOGRAFIAS DE BANCO (UNSPLASH), USADAS COMO REFERÊNCIA DE DIREÇÃO DE ARTE.</p>
+    </section>
+
+    <section id="bastidores" data-bruma-sec data-screen-label="06 · Bastidores" style="position: relative; min-height: 100vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: clamp(32px, 5vw, 96px); align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 14vh;">
+      <div style="max-width: 40rem;">
+        <div data-reveal style="display: flex; align-items: center; gap: 12px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">
+          <img src="assets/kyber/cristal-mark.webp" alt="" width="26" height="26" style="width: 26px; height: 26px;">
+          <span style="display: flex; flex-direction: column; line-height: 1;">
+            <b style="font-family: Orbitron, sans-serif; font-weight: 800; font-size: 15px; letter-spacing: .02em; color: #FFFFFF;">KYBER</b>
+            <span style="font-family: Orbitron, sans-serif; font-weight: 800; font-size: 7.5px; letter-spacing: .46em; color: #53E8FF; margin-top: 3px;">TECH</span>
+          </span>
+          <span style="margin-left: 14px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F;">06 · Bastidores</span>
+        </div>
+        <h2 data-reveal style="margin-top: 26px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.2vw, 62px); line-height: 1.06; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Nada nesta página é vídeo.</h2>
+        <p data-reveal style="margin-top: 24px; max-width: 48ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Cada quadro do frasco, do líquido e dos botânicos é calculado no seu navegador, agora, em WebGL. O vidro refrata o que está atrás dele; a névoa, as bolhas e o giro respondem à rolagem. No celular a cena desce para uma versão leve, e em movimento reduzido ela para de girar sem sumir.</p>
+        <div data-reveal style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; margin-top: 32px; background: rgba(217,217,227,.12); border: 1px solid rgba(217,217,227,.12); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <div style="background: #0E0F11; padding: 16px 18px;">
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; color: rgba(217,217,227,.55);">TRIÂNGULOS POR QUADRO</span>
+            <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ tris }}</b>
+          </div>
+          <div style="background: #0E0F11; padding: 16px 18px;">
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; color: rgba(217,217,227,.55);">CHAMADAS DE DESENHO</span>
+            <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ calls }}</b>
+          </div>
+          <div style="background: #0E0F11; padding: 16px 18px;">
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; color: rgba(217,217,227,.55);">QUADROS POR SEGUNDO</span>
+            <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ fps }}</b>
+          </div>
+          <div style="background: #0E0F11; padding: 16px 18px;">
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .18em; color: rgba(217,217,227,.55);">RESOLUÇÃO DA CENA</span>
+            <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2.2vw, 28px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ res }}</b>
+          </div>
+        </div>
+        <ul data-reveal style="list-style: none; padding: 0; margin-top: 28px; display: grid; gap: 10px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .3s, transform .9s cubic-bezier(.22, 1, .36, 1) .3s;">
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.78);"><i aria-hidden="true" style="flex: none; display: block; width: 6px; height: 6px; margin-top: 8px; background: #B86B3A;"></i>Three.js sobre WebGL 2: uma cena, cerca de trinta chamadas de desenho por quadro</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.78);"><i aria-hidden="true" style="flex: none; display: block; width: 6px; height: 6px; margin-top: 8px; background: #B86B3A;"></i>Vidro com transmissão, espessura e índice de refração físicos; o título atrás do frasco é refratado pela malha</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.78);"><i aria-hidden="true" style="flex: none; display: block; width: 6px; height: 6px; margin-top: 8px; background: #B86B3A;"></i>Líquido, bolhas e botânicos animados por instâncias, sem um vídeo sequer</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.78);"><i aria-hidden="true" style="flex: none; display: block; width: 6px; height: 6px; margin-top: 8px; background: #B86B3A;"></i>Versão leve no celular: sem transmissão, menos partículas, meia resolução</li>
+          <li style="display: flex; gap: 12px; font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.78);"><i aria-hidden="true" style="flex: none; display: block; width: 6px; height: 6px; margin-top: 8px; background: #B86B3A;"></i>Movimento reduzido respeitado: a composição fica parada, nunca vazia</li>
+        </ul>
+        <div data-reveal style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .35s, transform .9s cubic-bezier(.22, 1, .36, 1) .35s;">
+          <button type="button" onClick="{{ toggleWire }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; background: transparent; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s;" style-hover="background: #B86B3A; color: #0E0F11; border-color: #B86B3A;">{{ wireLabel }}</button>
+          <a href="https://somoskyber.com.br/#contato" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; background: #B86B3A; border: 1px solid #B86B3A; border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E0F11; transition: background .3s, border-color .3s;" style-hover="background: #D9A57F; border-color: #D9A57F; color: #0E0F11;">Quero um site que faça isso</a>
+        </div>
+      </div>
+      <div aria-hidden="true" style="min-height: 1px;"></div>
+    </section>
+
+    <section id="fecho" data-bruma-sec data-screen-label="07 · Fecho" style="position: relative; padding: clamp(22vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 0;">
+      <div style="max-width: 62rem;">
+        <h2 data-reveal style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(36px, 5.4vw, 80px); line-height: 1.04; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">A Bruma é fictícia. A Kyber Tech atende hoje.</h2>
+        <p data-reveal style="margin-top: 26px; max-width: 52ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Sites, sistemas e atendimento por IA para empresas, feitos por quem conversa com você no WhatsApp. Estúdio em Goiânia, clientes em todo o Brasil.</p>
+        <div data-reveal style="display: flex; flex-wrap: wrap; gap: 14px; margin-top: 34px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">
+          <a href="https://somoskyber.com.br/#contato" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; background: #B86B3A; border: 1px solid #B86B3A; border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E0F11; transition: background .3s, border-color .3s;" style-hover="background: #D9A57F; border-color: #D9A57F; color: #0E0F11;">Falar com a Kyber</a>
+          <a href="https://somoskyber.com.br/portfolio" style="display: inline-flex; align-items: center; gap: 10px; min-height: 46px; padding: 0 22px; border: 1px solid rgba(184,107,58,.75); border-radius: 100px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s;" style-hover="background: #B86B3A; color: #0E0F11; border-color: #B86B3A;">Ver o portfólio</a>
+        </div>
+      </div>
+      <footer style="margin-top: clamp(96px, 16vh, 170px); border-top: 1px solid rgba(217,217,227,.12); padding: 34px 0 calc(44px + env(safe-area-inset-bottom)); display: flex; flex-wrap: wrap; gap: 16px 48px; align-items: baseline; justify-content: space-between; background: rgba(14,15,17,.82); box-shadow: 0 0 0 clamp(20px, 5vw, 72px) rgba(14,15,17,.82);">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: rgba(217,217,227,.55);">BRUMA · ESTUDO DIGITAL 2026</span>
+        <span style="font-size: 12px; line-height: 1.7; color: rgba(217,217,227,.55); max-width: 58ch;">Projeto conceitual criado pela Kyber Tech. Marca, produtos, preços e dados são fictícios; nada está à venda. Fotografias de banco (Unsplash). Aprecie com moderação.</span>
+        <a href="https://somoskyber.com.br" style="font-size: 12px; letter-spacing: .14em; color: #F1F0F4; border-bottom: 1px solid rgba(184,107,58,.6); padding-bottom: 3px;">Desenvolvido por Kyber Tech</a>
+      </footer>
+    </section>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;qualidade&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;alta&quot;, &quot;leve&quot;], &quot;default&quot;: &quot;auto&quot;, &quot;tsType&quot;: &quot;'auto' | 'alta' | 'leve'&quot;, &quot;section&quot;: &quot;Cena 3D&quot; },
+  &quot;corLiquido&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;violeta&quot;, &quot;rose&quot;, &quot;ambar&quot;], &quot;default&quot;: &quot;violeta&quot;, &quot;tsType&quot;: &quot;'violeta' | 'rose' | 'ambar'&quot;, &quot;section&quot;: &quot;Cena 3D&quot; },
+  &quot;velocidade&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.25, &quot;max&quot;: 2.5, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Cena 3D&quot; }
+}">
+class Component extends DCLogic {
+  static LABELS = ['00 · O FRASCO', '01 · A NÉVOA', '02 · BOTÂNICOS', '03 · DESTILAÇÃO', '04 · TRÊS FRASCOS', '05 · COMO SERVIR', '06 · BASTIDORES', '07 · FECHO'];
+  // Uma pose por seção. O quadro-chave fica no centro da seção; a transição acontece na
+  // metade final de uma e na metade inicial da seguinte.
+  static POSES_D = [
+    { bx: 0, by: -0.12, bz: 0, brz: 0, bs: 1, spin: 0.28, title: 1, botSpread: 1, botVis: 1, botCx: 0, botCy: 0.1, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 1, grid: 0 },
+    { bx: 1.85, by: 0.05, bz: 0, brz: -0.3, bs: 0.95, spin: 0.18, title: 0, botSpread: 0.88, botVis: 0.9, botCx: 1.85, botCy: 0.05, botCz: 0, botSpeed: 0.7, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.75, grid: 0 },
+    { bx: 0, by: -7.5, bz: -0.4, brz: 0.1, bs: 0.5, spin: 0.12, title: 0, botSpread: 0.82, botVis: 1, botCx: -1.9, botCy: 0.2, botCz: 0.2, botSpeed: 1.5, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.65, grid: 0 },
+    { bx: 0, by: 0.75, bz: 0.3, brz: -1.38, bs: 1.3, spin: 0.06, title: 0, botSpread: 2.4, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 1, wire: 0, camZ: 6.2, trio: 0, glow: 0.9, grid: 0 },
+    { bx: 0, by: 0.62, bz: 0, brz: 0, bs: 0.72, spin: 0.22, title: 0, botSpread: 2.4, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.6, trio: 1, glow: 0.8, grid: 0 },
+    { bx: 0, by: -7, bz: -3, brz: 0, bs: 0.5, spin: 0.2, title: 0, botSpread: 2.4, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.6, trio: 0, glow: 0.2, grid: 0 },
+    { bx: 1.55, by: -0.05, bz: 0, brz: 0.12, bs: 1, spin: 0.4, title: 0, botSpread: 2.4, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 1, camZ: 6.2, trio: 0, glow: 0.45, grid: 1 },
+    { bx: 2.7, by: 0.2, bz: -1.2, brz: 0, bs: 0.72, spin: 0.22, title: 0, botSpread: 0.9, botVis: 0.6, botCx: 2.7, botCy: 0.3, botCz: -1.2, botSpeed: 0.8, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.85, grid: 0 },
+  ];
+  static POSES_M = [
+    { bx: 0, by: 0.8, bz: 0, brz: 0, bs: 0.72, spin: 0.28, title: 1, botSpread: 0.78, botVis: 1, botCx: 0, botCy: 0.85, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 1, grid: 0 },
+    { bx: 0.55, by: 1.35, bz: 0, brz: -0.35, bs: 0.55, spin: 0.18, title: 0, botSpread: 0.6, botVis: 0.8, botCx: 0.55, botCy: 1.35, botCz: 0, botSpeed: 0.7, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.75, grid: 0 },
+    { bx: 0, by: -8, bz: -0.6, brz: 0.12, bs: 0.4, spin: 0.12, title: 0, botSpread: 0.72, botVis: 1, botCx: 0, botCy: 1.55, botCz: 0, botSpeed: 1.5, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.65, grid: 0 },
+    { bx: 0, by: 1.45, bz: 0.2, brz: -1.38, bs: 0.78, spin: 0.06, title: 0, botSpread: 2, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 1, wire: 0, camZ: 6.2, trio: 0, glow: 0.9, grid: 0 },
+    { bx: 0, by: 1.25, bz: 0, brz: 0, bs: 0.5, spin: 0.22, title: 0, botSpread: 2, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.6, trio: 1, glow: 0.8, grid: 0 },
+    { bx: 0, by: -8, bz: -3, brz: 0, bs: 0.4, spin: 0.2, title: 0, botSpread: 2, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 0, camZ: 6.6, trio: 0, glow: 0.2, grid: 0 },
+    { bx: 0, by: 1.35, bz: 0, brz: 0.12, bs: 0.62, spin: 0.4, title: 0, botSpread: 2, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, liq: 0, wire: 1, camZ: 6.2, trio: 0, glow: 0.45, grid: 1 },
+    { bx: 0, by: 1.0, bz: -1, brz: 0, bs: 0.6, spin: 0.22, title: 0, botSpread: 0.9, botVis: 0.6, botCx: 0, botCy: 1.0, botCz: -1, botSpeed: 0.8, liq: 0, wire: 0, camZ: 6.2, trio: 0, glow: 0.85, grid: 0 },
+  ];
+
+  state = { sec: 0, mobile: false, sceneOk: null, wireManual: false, tris: '0', calls: '0', fps: '0', res: '0 × 0' };
+  canvasRef = React.createRef();
+
+  componentDidMount() {
+    this.cur = 0; this.target = 0; this.secs = []; this.parX = 0; this.parY = 0; this.last = 0; this.raf = 0;
+    this.mq = window.matchMedia('(max-width: 899px)');
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.onMq = () => { this.setState({ mobile: this.mq.matches }); this.measure(); this.readTarget(); };
+    if (this.mq.addEventListener) this.mq.addEventListener('change', this.onMq); else this.mq.addListener(this.onMq);
+    if (this.mq.matches) this.setState({ mobile: true });
+    this.onScroll = () => this.readTarget();
+    this.onResize = () => { this.measure(); this.readTarget(); if (this.scene) this.scene.resize(); };
+    this.onPointer = (e) => {
+      if (this.mq.matches) return;
+      this.parX = (e.clientX / window.innerWidth - 0.5) * 2;
+      this.parY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    this.onVis = () => {
+      if (document.hidden) { cancelAnimationFrame(this.raf); this.raf = 0; }
+      else if (!this.raf) { this.last = 0; this.raf = requestAnimationFrame(this.tick); }
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('pointermove', this.onPointer, { passive: true });
+    document.addEventListener('visibilitychange', this.onVis);
+    // Link com âncora: o conteúdo só existe depois de montar, então o salto nativo perdeu o alvo.
+    try { const alvo = location.hash && document.querySelector(location.hash); if (alvo) window.scrollTo(0, alvo.getBoundingClientRect().top + (window.scrollY || 0)); } catch (e) {}
+    this.measure(); this.readTarget(); this.cur = this.target;
+    this.remeasure = setTimeout(() => { this.measure(); this.readTarget(); }, 800);
+    this.reveals();
+    this.loadScene();
+    this.statTimer = setInterval(() => this.pushStats(), 500);
+    this.raf = requestAnimationFrame(this.tick);
+  }
+
+  componentDidUpdate(prev) {
+    const p = this.props || {}, q = prev || {};
+    if (!this.scene) return;
+    if (p.velocidade !== q.velocidade || p.corLiquido !== q.corLiquido) {
+      this.scene.setOptions({ speed: +(p.velocidade ?? 1), liquid: p.corLiquido ?? 'violeta' });
+    }
+    if (p.qualidade !== q.qualidade) { try { this.scene.destroy(); } catch (e) {} this.scene = null; this.loadScene(); }
+  }
+
+  componentWillUnmount() {
+    cancelAnimationFrame(this.raf);
+    clearTimeout(this.remeasure); clearInterval(this.statTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('pointermove', this.onPointer);
+    document.removeEventListener('visibilitychange', this.onVis);
+    if (this.mq) { if (this.mq.removeEventListener) this.mq.removeEventListener('change', this.onMq); else this.mq.removeListener(this.onMq); }
+    if (this.io) this.io.disconnect();
+    if (this.scene) { try { this.scene.destroy(); } catch (e) {} this.scene = null; }
+  }
+
+  measure() {
+    const sy = window.scrollY || window.pageYOffset || 0;
+    this.secs = Array.from(document.querySelectorAll('[data-bruma-sec]')).map((el) => {
+      const r = el.getBoundingClientRect();
+      return { top: r.top + sy, h: Math.max(1, r.height) };
+    });
+  }
+
+  readTarget() {
+    const n = this.secs.length; if (!n) return;
+    const y = (window.scrollY || window.pageYOffset || 0) + window.innerHeight / 2;
+    let t = 0;
+    for (let i = 0; i < n; i++) {
+      const s = this.secs[i];
+      if (y < s.top) break;
+      t = i + Math.min(1, (y - s.top) / s.h);
+    }
+    this.target = Math.max(0, Math.min(n - 0.001, t));
+  }
+
+  poseAt(t) {
+    const P = this.state.mobile ? Component.POSES_M : Component.POSES_D;
+    const n = P.length;
+    const u = Math.max(0, Math.min(n - 1, t - 0.5));
+    const i = Math.min(n - 2, Math.floor(u));
+    const f = u - i;
+    const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
+    const a = P[i], b = P[i + 1], o = {};
+    for (const k in a) o[k] = a[k] + (b[k] - a[k]) * e;
+    return o;
+  }
+
+  tick = (now) => {
+    this.raf = requestAnimationFrame(this.tick);
+    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    this.last = now;
+    const k = this.reduced ? 1 : 1 - Math.pow(1 - 0.085, dt * 60);
+    this.cur += (this.target - this.cur) * k;
+    if (Math.abs(this.target - this.cur) < 0.0002) this.cur = this.target;
+    const sec = Math.max(0, Math.min(Component.LABELS.length - 1, Math.floor(this.target)));
+    if (sec !== this.state.sec) this.setState({ sec });
+    if (this.scene) {
+      const p = this.poseAt(this.cur);
+      if (this.state.wireManual) { p.wire = 1; p.grid = Math.max(p.grid, 1); }
+      this.scene.render(p, dt, now, this.parX, this.parY);
+    }
+  };
+
+  pushStats() {
+    if (!this.scene) return;
+    if (this.target < 5.2 || this.target > 7.6) return;
+    const s = this.scene.stats();
+    const f = (n) => Number(n || 0).toLocaleString('pt-BR');
+    this.setState({ tris: f(s.tris), calls: f(s.calls), fps: f(s.fps), res: f(s.w) + ' × ' + f(s.h) });
+  }
+
+  async loadScene() {
+    const canvas = this.canvasRef.current;
+    if (!canvas) { this.setState({ sceneOk: false }); return; }
+    try {
+      const mod = await import(new URL('bruma-scene.js', document.baseURI).href);
+      const q = this.props.qualidade || 'auto';
+      const coarse = window.matchMedia('(pointer: coarse)').matches;
+      const low = q === 'leve' || (q === 'auto' && (this.mq.matches || coarse));
+      this.scene = mod.createScene({ canvas, low, reduced: this.reduced, liquid: this.props.corLiquido || 'violeta', speed: +(this.props.velocidade || 1) });
+      canvas.addEventListener('webglcontextlost', () => { this.scene = null; this.setState({ sceneOk: false }); }, { once: true });
+      this.setState({ sceneOk: true });
+    } catch (e) {
+      console.error('[bruma] cena 3D indisponível, ficando com o pôster', e);
+      this.setState({ sceneOk: false });
+    }
+  }
+
+  // Reveal falha aberto: sem IntersectionObserver, tudo aparece de uma vez.
+  reveals() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    const show = (el) => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    try {
+      const io = new IntersectionObserver((ents) => {
+        for (const e of ents) if (e.isIntersecting) { show(e.target); io.unobserve(e.target); }
+      }, { rootMargin: '0px 0px -6% 0px', threshold: 0.02 });
+      els.forEach((el) => io.observe(el));
+      this.io = io;
+    } catch (e) { els.forEach(show); }
+  }
+
+  toggleWire = () => this.setState((s) => ({ wireManual: !s.wireManual }));
+
+  renderVals() {
+    const s = this.state;
+    return {
+      canvasRef: this.canvasRef,
+      desktop: !s.mobile,
+      secLabel: Component.LABELS[s.sec] || Component.LABELS[0],
+      titleOpacity: s.sceneOk ? '0' : '1',
+      semCena: s.sceneOk === false,
+      tris: s.tris, calls: s.calls, fps: s.fps, res: s.res,
+      toggleWire: this.toggleWire,
+      wireLabel: s.wireManual ? 'Voltar ao vidro' : 'Ver a malha',
+    };
+  }
+}
+</script>
+</body>
+</html>

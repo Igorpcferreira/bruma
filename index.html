@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>BRUMA, gin conceitual em 3D no navegador · Kyber Tech</title>
+<meta name="description" content="Estudo conceitual da Kyber Tech: um frasco de gin em 3D em tempo real no navegador, com oito capítulos guiados pelo scroll. A BRUMA não existe. A tecnologia, sim.">
+<meta name="author" content="Kyber Tech">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#0E0F11">
+<link rel="canonical" href="https://bruma-portfolio.vercel.app">
+
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="Kyber Tech">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:url" content="https://bruma-portfolio.vercel.app">
+<meta property="og:title" content="BRUMA, gin conceitual em 3D no navegador">
+<meta property="og:description" content="Estudo conceitual da Kyber Tech: um frasco de gin em 3D em tempo real no navegador, com oito capítulos guiados pelo scroll. A BRUMA não existe. A tecnologia, sim.">
+<meta property="og:image" content="https://bruma-portfolio.vercel.app/og.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Frasco de gin em vidro escuro com rótulo de cobre, renderizado em 3D sobre fundo grafite.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="BRUMA, gin conceitual em 3D no navegador">
+<meta name="twitter:description" content="Estudo conceitual da Kyber Tech: um frasco de gin em 3D em tempo real no navegador, guiado pelo scroll.">
+<meta name="twitter:image" content="https://bruma-portfolio.vercel.app/og.jpg">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CreativeWork",
+      "@id": "https://bruma-portfolio.vercel.app#obra",
+      "name": "BRUMA",
+      "url": "https://bruma-portfolio.vercel.app",
+      "description": "Estudo conceitual de direção criativa e desenvolvimento da Kyber Tech: uma marca fictícia de gin apresentada como cena 3D em tempo real no navegador, em oito capítulos guiados pelo scroll. A marca BRUMA não existe e nenhum produto é vendido aqui.",
+      "genre": "Experiência digital",
+      "inLanguage": "pt-BR",
+      "image": "https://bruma-portfolio.vercel.app/og.jpg",
+      "isAccessibleForFree": true,
+      "creator": { "@type": "Organization", "name": "Kyber Tech", "url": "https://somoskyber.com.br" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Início", "item": "https://somoskyber.com.br" },
+        { "@type": "ListItem", "position": 2, "name": "Portfólio", "item": "https://somoskyber.com.br/portfolio" },
+        { "@type": "ListItem", "position": 3, "name": "BRUMA", "item": "https://bruma-portfolio.vercel.app" }
+      ]
+    }
+  ]
+}
+</script>
+
+<!-- React e ReactDOM servidos daqui, não do unpkg. O dc-runtime (support.js) só vai à CDN
+     quando window.React ainda não existe, então carregá-los antes resolve sem alterar o
+     runtime. O SHA-384 dos dois arquivos foi conferido contra o SRI que o próprio support.js
+     declara para as URLs do unpkg. -->
+<script src="/vendor/react.production.min.js"></script>
+<script src="/vendor/react-dom.production.min.js"></script>
+<script src="/support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <link rel="preload" href="/fonts/Karla-300-700-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="/fonts/Italiana-400-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts/fontes.css">
+  <style>
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    html, body { margin: 0; background: #0E0F11; }
+    body { color: #D9D9E3; font-family: Karla, system-ui, sans-serif; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
+    body::before { content: ""; position: fixed; inset: 0; z-index: 1; pointer-events: none; background: radial-gradient(ellipse 85% 75% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,.4) 100%); }
+    body::after { content: ""; position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: .055; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E"); }
+    a { color: #D9D9E3; text-decoration: none; }
+    a:hover { color: #D9A57F; }
+    ::selection { background: #B86B3A; color: #0E0F11; }
+    h1, h2, h3, p, figure, ul { margin: 0; }
+    h1, h2, h3, p { text-wrap: pretty; }
+    img { display: block; max-width: 100%; }
+    button { font: inherit; cursor: pointer; }
+    a:focus-visible, button:focus-visible { outline: 1px solid #D9A57F; outline-offset: 4px; }
+    @keyframes brumaSobe { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+    @keyframes brumaPulso { 0%, 100% { transform: scaleY(.35); opacity: .4; } 50% { transform: scaleY(1); opacity: 1; } }
+    @keyframes brumaCarrega { from { transform: translateX(-100%); } to { transform: translateX(100%); } }
+    @keyframes brumaMascara { from { clip-path: inset(0 0 0 100%); opacity: 0; } to { clip-path: inset(0); opacity: 1; } }
+    @keyframes brumaPainel { from { opacity: 0; transform: translateX(24px); } to { opacity: 1; transform: none; } }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</helmet>
+<div style="position: relative; min-height: 100vh; background: #0E0F11; color: #D9D9E3; font-family: Karla, system-ui, sans-serif; min-width: 0;">
+  <a href="#conteudo" style="position: fixed; left: 16px; top: -80px; z-index: 100; padding: 12px 16px; background: #B86B3A; color: #0E0F11; font-size: 12px; font-weight: 500; letter-spacing: .14em; text-transform: uppercase; border-radius: 2px; transition: top .2s;" style-focus="top: 16px;">Pular para o conteúdo</a>
+
+  <canvas ref="{{ canvasRef }}" aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; display: block; pointer-events: none;"></canvas>
+
+  <sc-if value="{{ semCena }}" hint-placeholder-val="{{ false }}">
+    <div aria-hidden="true" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; overflow: hidden; background: radial-gradient(60% 50% at 58% 42%, rgba(74,78,140,.5), rgba(14,15,17,0) 70%), radial-gradient(30% 24% at 70% 72%, rgba(184,107,58,.22), rgba(14,15,17,0) 70%), #0E0F11;">
+      <span style="position: absolute; left: 50%; top: {{ posterTituloTop }}; transform: translate(-50%, -50%); font-family: Italiana, Georgia, serif; font-size: clamp(84px, 17vw, 260px); letter-spacing: .08em; line-height: 1; color: rgba(217,217,227,.9); white-space: nowrap;">BRUMA</span>
+      <div style="position: absolute; left: {{ posterLeft }}; top: {{ posterTop }}; transform: translate(-50%, -50%) scale({{ posterEsc }}); width: 170px; display: flex; flex-direction: column; align-items: center;">
+        <div style="display: flex; flex-direction: column; align-items: center; filter: drop-shadow(0 30px 40px rgba(0,0,0,.6));">
+          <div style="width: 64px; height: 46px; background: linear-gradient(90deg, #6E3A1C, #D9A57F 35%, #B86B3A 55%, #7A4322); border-radius: 8px 8px 4px 4px;"></div>
+          <div style="width: 40px; height: 22px; background: linear-gradient(90deg, #2B1F19, #5B4536 45%, #3F2E26);"></div>
+          <div style="width: 54px; height: 118px; border-radius: 4px 4px 0 0; background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(46,48,72,.75) 16%, rgba(28,29,40,.7) 50%, rgba(52,54,86,.75) 84%, rgba(255,255,255,.16)); box-shadow: inset 8px 0 14px -8px rgba(255,255,255,.45), inset -8px 0 14px -8px rgba(255,255,255,.3);"></div>
+          <div style="width: 62px; height: 12px; background: linear-gradient(90deg, #6E3A1C, #D9A57F 35%, #B86B3A 55%, #7A4322);"></div>
+          <div style="width: 170px; height: 92px; margin-top: -2px; border-radius: 85px 85px 0 0 / 92px 92px 0 0; background: linear-gradient(90deg, rgba(255,255,255,.10), rgba(46,48,72,.75) 16%, rgba(28,29,40,.7) 50%, rgba(52,54,86,.75) 84%, rgba(255,255,255,.16)); box-shadow: inset 8px 0 14px -8px rgba(255,255,255,.45), inset -8px 0 14px -8px rgba(255,255,255,.3);"></div>
+          <div style="position: relative; width: 170px; height: 300px; background: linear-gradient(90deg, rgba(255,255,255,.12), #4B4FA8 14%, #33368A 50%, #4E52B0 86%, rgba(255,255,255,.2)); box-shadow: inset 8px 0 14px -8px rgba(255,255,255,.5), inset -8px 0 14px -8px rgba(255,255,255,.35);">
+            <div style="position: absolute; left: 26px; right: 26px; bottom: 44px; height: 96px; background: #EBE4D5; border: 2px solid #B86B3A; box-shadow: inset 0 0 0 5px #EBE4D5, inset 0 0 0 6px rgba(184,107,58,.7); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px;">
+              <span style="font-family: Italiana, Georgia, serif; font-size: 26px; letter-spacing: .1em; color: #A6612F; line-height: 1;">BRUMA</span>
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 6px; letter-spacing: .2em; color: #1E1C24;">GIN DO CERRADO</span>
+            </div>
+          </div>
+          <div style="width: 170px; height: 34px; border-radius: 0 0 14px 14px; border-top: 1px solid rgba(255,255,255,.12); background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(60,64,150,.35) 20%, rgba(30,31,44,.55) 50%, rgba(60,64,150,.35) 80%, rgba(255,255,255,.2));"></div>
+        </div>
+        <div style="width: 260px; height: 44px; margin-top: 6px; border-radius: 50%; background: radial-gradient(ellipse at center, rgba(106,111,208,.35), rgba(0,0,0,0) 70%);"></div>
+      </div>
+      <img src="/assets/bruma/poster-hero.jpg" alt="" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; object-position: 62% 40%;">
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ carregando }}" hint-placeholder-val="{{ false }}">
+    <div role="status" aria-label="Carregando a cena 3D" style="position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 40; overflow: hidden; pointer-events: none;">
+      <i style="display: block; width: 100%; height: 100%; background: linear-gradient(90deg, rgba(184,107,58,0), #D9A57F, rgba(184,107,58,0)); animation: brumaCarrega 1.6s ease-in-out infinite;"></i>
+    </div>
+  </sc-if>
+
+  <sc-if value="{{ desktopUI }}" hint-placeholder-val="{{ true }}">
+    <header style="position: fixed; top: 0; left: 0; z-index: 30; padding: 22px clamp(20px, 5vw, 72px); pointer-events: none;">
+      <a href="#frasco" style="pointer-events: auto; display: inline-flex; flex-direction: column; gap: 7px; min-width: 0;">
+        <span style="font-family: Italiana, Georgia, serif; font-size: 20px; letter-spacing: .28em; line-height: 1; color: #F1F0F4;">BRUMA</span>
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: #D9A57F; white-space: nowrap;">LOTE 02 · 44% · ESTUDO CONCEITUAL</span>
+      </a>
+    </header>
+    <nav aria-label="Régua de destilação: capítulos" style="position: fixed; right: 26px; top: 50%; transform: translateY(-50%); z-index: 30; display: flex; flex-direction: column; align-items: flex-end; gap: 26px;">
+      <button ref="{{ indiceBtnRef }}" type="button" aria-expanded="{{ indiceAberto }}" aria-controls="indice" onClick="{{ abrirIndice }}" style="display: inline-flex; align-items: center; gap: 12px; min-height: 40px; padding: 0 0 0 10px; background: transparent; border: 0; color: rgba(217,217,227,.8); font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .24em; transition: color .3s;" style-hover="color: #F1F0F4;">ÍNDICE <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px;"><i style="display: block; width: 16px; height: 1px; background: #D9A57F;"></i><i style="display: block; width: 9px; height: 1px; background: #D9A57F;"></i><i style="display: block; width: 13px; height: 1px; background: #D9A57F;"></i></span></button>
+      <div style="position: relative; height: min(44vh, 400px); width: 1px; background: rgba(184,107,58,.42);">
+        <i ref="{{ marcadorRef }}" aria-hidden="true" style="position: absolute; left: -1px; top: 0; width: 3px; height: 16px; margin-top: -8px; background: #D9A57F; box-shadow: 0 0 10px rgba(217,165,127,.9), 0 0 26px rgba(184,107,58,.5);"></i>
+        <sc-for list="{{ regua }}" as="r" hint-placeholder-count="8">
+          <a href="{{ r.href }}" aria-label="{{ r.aria }}" aria-current="{{ r.current }}" style="position: absolute; right: 0; top: {{ r.top }}; transform: translateY(-50%); display: flex; align-items: center; gap: 10px; padding: 6px 0; white-space: nowrap;">
+            <sc-if value="{{ r.ativo }}" hint-placeholder-val="{{ false }}">
+              <span style="font-family: Italiana, Georgia, serif; font-size: 16px; letter-spacing: .06em; color: #F1F0F4; animation: brumaMascara .55s cubic-bezier(.22, 1, .36, 1) both;">{{ r.nome }}</span>
+            </sc-if>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; font-variant-numeric: tabular-nums; color: {{ r.cor }}; transition: color .4s;">{{ r.num }}</span>
+            <i aria-hidden="true" style="display: block; height: 1px; width: {{ r.tick }}; background: {{ r.tickCor }}; transition: width .4s, background .4s;"></i>
+          </a>
+        </sc-for>
+      </div>
+    </nav>
+  </sc-if>
+
+  <sc-if value="{{ mobileUI }}" hint-placeholder-val="{{ false }}">
+    <header style="position: fixed; top: 0; left: 0; right: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-width: 0; padding: calc(6px + env(safe-area-inset-top)) calc(10px + env(safe-area-inset-right)) 6px calc(18px + env(safe-area-inset-left)); background: linear-gradient(to bottom, rgba(14,15,17,.82), rgba(14,15,17,0));">
+      <a href="#frasco" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; min-width: 0; font-family: Italiana, Georgia, serif; font-size: 19px; letter-spacing: .26em; line-height: 1; color: #F1F0F4; white-space: nowrap;">BRUMA <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .16em; color: #D9A57F; font-variant-numeric: tabular-nums;">{{ capMobile }}</span></a>
+      <button ref="{{ indiceBtnRef }}" type="button" aria-expanded="{{ indiceAberto }}" aria-controls="indice" onClick="{{ abrirIndice }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; min-width: 48px; padding: 0 10px; background: transparent; border: 0; color: #F1F0F4; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em;">ÍNDICE <span aria-hidden="true" style="display: flex; flex-direction: column; align-items: flex-end; gap: 3px;"><i style="display: block; width: 16px; height: 1px; background: #D9A57F;"></i><i style="display: block; width: 9px; height: 1px; background: #D9A57F;"></i><i style="display: block; width: 13px; height: 1px; background: #D9A57F;"></i></span></button>
+    </header>
+  </sc-if>
+
+  <sc-if value="{{ indiceAberto }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ fecharPorFora }}" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 60; display: flex; justify-content: flex-end; background: rgba(8,8,11,.45);">
+      <div id="indice" ref="{{ painelRef }}" role="dialog" aria-modal="true" aria-label="Índice de capítulos" onKeyDown="{{ teclaPainel }}" style="position: relative; width: min(560px, 100vw); height: 100%; overflow-y: auto; min-width: 0; display: flex; flex-direction: column; gap: 26px; padding: calc(18px + env(safe-area-inset-top)) calc(24px + env(safe-area-inset-right)) calc(28px + env(safe-area-inset-bottom)) calc(24px + env(safe-area-inset-left)); background: rgba(18,19,24,.8); background-image: repeating-linear-gradient(to bottom, rgba(217,217,227,.045) 0 1px, rgba(0,0,0,0) 1px 32px), linear-gradient(90deg, rgba(0,0,0,0) 70px, rgba(184,107,58,.28) 70px, rgba(184,107,58,.28) 71px, rgba(0,0,0,0) 71px); backdrop-filter: blur(22px) saturate(.9); -webkit-backdrop-filter: blur(22px) saturate(.9); border-left: 1px solid rgba(184,107,58,.3); animation: brumaPainel .45s cubic-bezier(.22, 1, .36, 1) both;">
+        <div style="display: flex; align-items: center; justify-content: space-between; gap: 16px;">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .24em; color: #D9A57F;">ÍNDICE · RÉGUA DE DESTILAÇÃO</span>
+          <button ref="{{ fecharRef }}" type="button" onClick="{{ fecharIndice }}" style="display: inline-flex; align-items: center; gap: 10px; min-height: 48px; min-width: 48px; padding: 0 12px; background: transparent; border: 1px solid rgba(217,217,227,.18); border-radius: 2px; color: #F1F0F4; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; transition: border-color .3s;" style-hover="border-color: #D9A57F;">FECHAR <span aria-hidden="true" style="font-size: 16px; line-height: 1;">×</span></button>
+        </div>
+        <nav aria-label="Capítulos" style="display: flex; flex-direction: column;">
+          <sc-for list="{{ capitulos }}" as="c" hint-placeholder-count="8">
+            <a href="{{ c.href }}" onClick="{{ fecharIndice }}" aria-current="{{ c.current }}" style="display: grid; grid-template-columns: 70px minmax(0, 1fr); column-gap: 18px; align-items: baseline; min-height: 64px; padding: 14px 0 14px 8px; border-top: 1px solid rgba(217,217,227,.1); color: inherit; transition: background .3s;" style-hover="background: rgba(217,217,227,.04);">
+              <span style="font-family: Italiana, Georgia, serif; font-size: 38px; line-height: 1; letter-spacing: .04em; font-variant-numeric: tabular-nums; color: {{ c.corNum }};">{{ c.num }}</span>
+              <span style="display: flex; flex-direction: column; gap: 5px; min-width: 0;">
+                <span style="font-family: Italiana, Georgia, serif; font-size: 24px; line-height: 1.1; color: #F1F0F4;">{{ c.nome }}</span>
+                <span style="font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.7);">{{ c.frase }}</span>
+              </span>
+            </a>
+          </sc-for>
+        </nav>
+        <div style="margin-top: auto; padding-top: 22px; border-top: 1px solid rgba(217,217,227,.1); display: flex; flex-direction: column; gap: 10px;">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .24em; color: #D9A57F;">ESTUDO CONCEITUAL</span>
+          <p style="font-size: 13px; line-height: 1.6; color: rgba(217,217,227,.7); max-width: 46ch;">A BRUMA é uma destilaria fictícia, criada como estudo autoral de direção de arte, 3D em tempo real e desenvolvimento web. Nada está à venda.</p>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.55);">LOTE 02 · 44% · 750 ML</span>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <main id="conteudo" style="position: relative; z-index: 2; min-width: 0; visibility: {{ visConteudo }};">
+
+    <section id="frasco" data-bruma-sec data-screen-label="00 · O frasco" style="position: relative; min-height: 100svh; display: flex; align-items: flex-end; padding: 0 clamp(20px, 5vw, 72px) clamp(28px, 9vh, 128px); min-width: 0;">
+      <div style="position: relative; z-index: 2; width: 100%; min-width: 0; max-width: min(100%, 34rem); padding-bottom: env(safe-area-inset-bottom); animation: brumaSobe .9s cubic-bezier(.22, 1, .36, 1) 1.4s both;">
+        <p style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; line-height: 1.8; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F;">Destilaria conceitual · Cerrado goiano · Estudo autoral 2026</p>
+        <h1 style="margin-top: 16px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.4vw, 50px); line-height: 1.08; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65);">Gin do Cerrado. Violeta no frasco, rosé no copo.</h1>
+        <sc-if value="{{ ui }}" hint-placeholder-val="{{ true }}">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 12px 22px; margin-top: 28px;">
+            <a href="#ritual" style="display: inline-flex; align-items: center; justify-content: center; gap: 12px; min-height: 48px; padding: 0 22px; background: rgba(184,107,58,.14); border: 1px solid #B86B3A; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, transform .15s;" style-hover="background: #B86B3A; color: #0E0F11;" style-active="transform: translateY(1px);">Descobrir o ritual <span aria-hidden="true" style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 12px;">↓</span></a>
+            <a href="#cena" style="display: inline-flex; align-items: center; min-height: 48px; padding: 0 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: rgba(217,217,227,.8); border-bottom: 1px solid rgba(184,107,58,.6); transition: color .3s, border-color .3s;" style-hover="color: #D9A57F; border-color: #D9A57F;">Ver como foi criado</a>
+          </div>
+        </sc-if>
+        <sc-if value="{{ mostrarNota }}" hint-placeholder-val="{{ false }}">
+          <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin-top: 20px;">
+            <p style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; line-height: 1.6; letter-spacing: .08em; color: rgba(217,217,227,.66);">{{ notaCena }}</p>
+            <sc-if value="{{ perdido }}" hint-placeholder-val="{{ false }}">
+              <button type="button" onClick="{{ recarregar }}" style="display: inline-flex; align-items: center; min-height: 40px; padding: 0 14px; background: transparent; border: 1px solid rgba(184,107,58,.7); border-radius: 2px; color: #F1F0F4; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em;" style-hover="background: #B86B3A; color: #0E0F11;">RECARREGAR A PÁGINA</button>
+            </sc-if>
+          </div>
+        </sc-if>
+      </div>
+      <sc-if value="{{ desktopUI }}" hint-placeholder-val="{{ true }}">
+        <div aria-hidden="true" style="position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%); display: flex; flex-direction: column; align-items: center; gap: 10px; pointer-events: none;">
+          <i style="display: block; width: 1px; height: 32px; background: linear-gradient(#B86B3A, rgba(184,107,58,0)); transform-origin: top; animation: brumaPulso 2.4s cubic-bezier(.22, 1, .36, 1) infinite;"></i>
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .24em; color: rgba(217,217,227,.55);">ROLE</span>
+        </div>
+      </sc-if>
+    </section>
+
+    <section id="nevoa" data-bruma-sec data-screen-label="01 · A névoa" style="position: relative; min-height: 100vh; display: flex; align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 14vh; min-width: 0;">
+      <div style="max-width: min(100%, 44rem); min-width: 0;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">01 · A névoa</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.4vw, 64px); line-height: 1.06; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Toda madrugada, o Cerrado solta uma névoa fina sobre o capim. Foi ela que deu nome ao gin.</h2>
+        <p data-reveal style="margin-top: 28px; max-width: 46ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.8); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Destilado em alambique de cobre, em lotes de 300 litros, com botânicos colhidos a menos de 200 km da destilaria. O violeta vem da flor fada-azul e vai embora no primeiro gole de tônica: o copo fica rosé.</p>
+      </div>
+    </section>
+
+    <section id="botanicos" data-bruma-sec data-screen-label="02 · Seis botânicos" style="position: relative; min-height: 170vh; padding: 0 clamp(20px, calc((100vw - 899px) * 100), 150px) 0 clamp(20px, 5vw, 72px); min-width: 0;">
+      <div style="position: sticky; top: 0; min-height: 100vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 4vw, 80px); align-items: center; padding: clamp(14vh, calc((900px - 100vw) * 100), 40vh) 0 10vh; min-width: 0;">
+        <div style="min-width: 0;">
+          <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">02 · Seis botânicos</p>
+          <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.08; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Zimbro, porque gin exige. Cerrado, porque a Bruma insiste.</h2>
+          <p data-reveal style="margin-top: 24px; max-width: 42ch; font-size: 16px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Cinco dos seis botânicos chegam de cooperativas de Pirenópolis e de Alto Paraíso. O zimbro vem da Macedônia, como em quase todo gin do mundo.</p>
+          <p data-reveal style="margin-top: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.55); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">HERBÁRIO ORBITAL · ROLE PARA DESTACAR CADA ESPÉCIME</p>
+        </div>
+        <div data-reveal style="border-bottom: 1px solid rgba(217,217,227,.12); min-width: 0; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+          <sc-for list="{{ botanicos }}" as="b" hint-placeholder-count="6">
+            <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; column-gap: 16px; align-items: baseline; padding: 15px 0; border-top: 1px solid rgba(217,217,227,.12); opacity: {{ b.op }}; transition: opacity .5s;">
+              <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: {{ b.corNum }}; transition: color .4s;">{{ b.n }}</b>
+              <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; color: {{ b.corNome }}; transition: color .4s;">{{ b.nome }}</h3>
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 9px; letter-spacing: .22em; color: #D9A57F; opacity: {{ b.opFoco }}; transition: opacity .4s;">ESPÉCIME EM FOCO</span>
+              <p style="grid-column: 2 / span 2; margin-top: 5px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.64);">{{ b.nota }}</p>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </section>
+
+    <section id="ritual" data-bruma-sec data-screen-label="03 · O ritual da cor" style="position: relative; min-height: 180vh; padding: 0 clamp(20px, 5vw, 72px); min-width: 0;">
+      <div style="position: sticky; top: 0; min-height: 100vh; display: flex; align-items: flex-end; padding-bottom: clamp(40px, 9vh, 110px); min-width: 0;">
+        <div style="max-width: min(100%, 38rem); min-width: 0;">
+          <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">03 · O ritual da cor</p>
+          <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.8vw, 58px); line-height: 1.06; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">A flor tinge o frasco de violeta. A tônica devolve o rosé.</h2>
+          <p data-reveal style="margin-top: 24px; max-width: 46ch; font-size: 16px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">O violeta vem da flor fada-azul, que entra depois do repouso. Ao encontrar a acidez da tônica, o pigmento muda e o copo fica rosé em segundos.</p>
+          <p data-reveal style="margin-top: 20px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; line-height: 1.9; letter-spacing: .18em; color: rgba(217,217,227,.58); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">MACERAÇÃO 24 H · DESTILAÇÃO EM COBRE, UMA PASSAGEM · REPOUSO 21 DIAS · A FLOR ENTRA POR ÚLTIMO</p>
+          <div data-reveal style="display: flex; align-items: center; flex-wrap: wrap; gap: 12px 14px; margin-top: 30px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .3s, transform .9s cubic-bezier(.22, 1, .36, 1) .3s;">
+            <span aria-hidden="true" style="display: block; width: 12px; height: 12px; border-radius: 50%; background: #4E52A8; box-shadow: 0 0 14px rgba(78,82,168,.9);"></span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.75);">VIOLETA NO FRASCO</span>
+            <span aria-hidden="true" style="position: relative; display: block; flex: 1 1 60px; min-width: 48px; max-width: 160px; height: 1px; background: rgba(217,217,227,.18); overflow: hidden;"><i ref="{{ barraRef }}" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, #4E52A8, #CC6F8E);"></i></span>
+            <span aria-hidden="true" style="display: block; width: 12px; height: 12px; border-radius: 50%; background: #CC6F8E; box-shadow: 0 0 14px rgba(204,111,142,.9);"></span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .2em; color: rgba(217,217,227,.75);">ROSÉ NO COPO</span>
+          </div>
+          <p style="margin-top: 14px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .12em; color: #D9A57F;">{{ liqTexto }}</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="expressoes" data-bruma-sec data-screen-label="04 · Três expressões" style="position: relative; min-height: 100vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 4vw, 80px); align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, calc((100vw - 899px) * 100), 150px) 14vh clamp(20px, 5vw, 72px); min-width: 0;">
+      <div style="max-width: min(100%, 36rem); min-width: 0;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">04 · Três expressões</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.08; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Uma casa, três temperamentos.</h2>
+        <p data-reveal style="margin-top: 20px; max-width: 44ch; font-size: 16px; line-height: 1.65; color: rgba(217,217,227,.78); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">A mesma base de zimbro e pequi, em três leituras. Escolha um frasco para trazê-lo à frente.</p>
+        <sc-if value="{{ desktop }}" hint-placeholder-val="{{ true }}">
+          <div data-reveal role="group" aria-label="Escolher expressão" style="margin-top: 28px; border-bottom: 1px solid rgba(217,217,227,.12); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+            <sc-for list="{{ expressoes }}" as="x" hint-placeholder-count="3">
+              <button type="button" aria-pressed="{{ x.ativa }}" onClick="{{ x.selecionar }}" style="display: grid; grid-template-columns: 14px minmax(0, 1fr) auto; column-gap: 16px; align-items: baseline; width: 100%; min-height: 56px; padding: 16px 0; background: transparent; border: 0; border-top: 1px solid rgba(217,217,227,.12); text-align: left; color: inherit; opacity: {{ x.op }}; transition: opacity .4s;" style-hover="opacity: 1;">
+                <span aria-hidden="true" style="display: block; width: 10px; height: 10px; border-radius: 50%; background: {{ x.cor }}; box-shadow: 0 0 12px {{ x.sombra }};"></span>
+                <span style="font-family: Italiana, Georgia, serif; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; color: #F1F0F4;">{{ x.nome }}</span>
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.62);">{{ x.teor }}</span>
+                <span style="grid-column: 2 / span 2; margin-top: 6px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.66);">{{ x.desc }}</span>
+              </button>
+            </sc-for>
+          </div>
+        </sc-if>
+        <sc-if value="{{ mobile }}" hint-placeholder-val="{{ false }}">
+          <div data-reveal style="margin-top: 26px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+            <div role="group" aria-label="Escolher expressão" style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid rgba(217,217,227,.18); border-radius: 2px; overflow: hidden;">
+              <sc-for list="{{ expressoes }}" as="x" hint-placeholder-count="3">
+                <button type="button" aria-pressed="{{ x.ativa }}" onClick="{{ x.selecionar }}" style="min-height: 48px; padding: 0 6px; background: {{ x.fundo }}; border: 0; color: {{ x.corTexto }}; font-size: 12px; font-weight: 500; letter-spacing: .12em; text-transform: uppercase; transition: background .3s, color .3s;">{{ x.curto }}</button>
+              </sc-for>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 20px;">
+              <div style="display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;">
+                <span aria-hidden="true" style="display: block; width: 10px; height: 10px; border-radius: 50%; background: {{ expressaoCor }}; box-shadow: 0 0 12px {{ expressaoSombra }};"></span>
+                <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 28px; line-height: 1.1; color: #F1F0F4;">{{ expressaoNome }}</h3>
+                <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.62);">{{ expressaoTeor }}</span>
+              </div>
+              <p style="font-size: 15px; line-height: 1.55; color: rgba(217,217,227,.72);">{{ expressaoDesc }}</p>
+            </div>
+          </div>
+        </sc-if>
+        <div data-reveal style="margin-top: 22px; display: flex; flex-direction: column; gap: 14px; align-items: flex-start; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .3s, transform .9s cubic-bezier(.22, 1, .36, 1) .3s;">
+          <button type="button" aria-expanded="{{ notasAbertas }}" onClick="{{ toggleNotas }}" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; background: rgba(184,107,58,.14); border: 1px solid #B86B3A; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, transform .15s;" style-hover="background: #B86B3A; color: #0E0F11;" style-active="transform: translateY(1px);">{{ notasLabel }}</button>
+          <sc-if value="{{ notasAbertas }}" hint-placeholder-val="{{ false }}">
+            <p style="max-width: 46ch; padding: 14px 16px; border-left: 1px solid rgba(184,107,58,.5); font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.8);">{{ expressaoNotas }}</p>
+          </sc-if>
+        </div>
+      </div>
+      <div aria-hidden="true" style="min-height: 1px;"></div>
+    </section>
+
+    <section id="servir" data-bruma-sec data-screen-label="05 · Como servir" style="position: relative; background: #0E0F11; padding: clamp(96px, 16vh, 160px) clamp(20px, calc((100vw - 899px) * 100), 150px) clamp(96px, 16vh, 160px) clamp(20px, 5vw, 72px); min-width: 0;">
+      <div style="max-width: min(100%, 40rem); min-width: 0;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">05 · Como servir</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(30px, 3.6vw, 54px); line-height: 1.08; color: #F1F0F4; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Gelo grande, tônica seca e nada de canudo.</h2>
+        <p data-reveal style="margin-top: 22px; max-width: 44ch; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.72); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Três receitas da casa. A primeira é a que muda de cor na frente de quem bebe.</p>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: clamp(16px, 2.4vw, 32px); margin-top: clamp(40px, 6vh, 64px);">
+        <figure data-reveal style="min-width: 0; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .05s, transform .9s cubic-bezier(.22, 1, .36, 1) .05s;">
+          <div style="position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 3px; background: #15161A;">
+            <img src="/assets/bruma/servir-bruma-tonica.webp" alt="Copo balão com gin e tônica, rodelas de limão e um ramo de alecrim." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.06) brightness(.92); transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+            <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(180deg, rgba(74,78,140,.5), rgba(184,107,58,.35)); mix-blend-mode: soft-light;"></div>
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Bruma &amp; Tônica</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.58);">50 ML · TÔNICA SECA · ALECRIM</span>
+          </figcaption>
+        </figure>
+        <figure data-reveal style="min-width: 0; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .15s, transform .9s cubic-bezier(.22, 1, .36, 1) .15s;">
+          <div style="position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 3px; background: #15161A;">
+            <img src="/assets/bruma/servir-sour-cagaita.webp" alt="Taça alta com drinque lilás e gelo, guarnecido com fatia de toranja e alecrim, sobre mesa de madeira clara." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.06) brightness(.92); transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+            <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(180deg, rgba(74,78,140,.5), rgba(184,107,58,.35)); mix-blend-mode: soft-light;"></div>
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Sour de cagaita</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.58);">BRUMA ROSÉ · CAGAITA · CLARA</span>
+          </figcaption>
+        </figure>
+        <figure data-reveal style="min-width: 0; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <div style="position: relative; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 3px; background: #15161A;">
+            <img src="/assets/bruma/servir-puro-gelado.webp" alt="Copo balão com gin tônica, rodela de limão e alecrim, sobre uma rodela de tronco, com uma planta ao fundo." loading="lazy" decoding="async" style="width: 100%; height: 100%; object-fit: cover; filter: saturate(.8) contrast(1.06) brightness(.92); transition: transform 1.2s cubic-bezier(.22, 1, .36, 1);" style-hover="transform: scale(1.04);">
+            <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; background: linear-gradient(180deg, rgba(74,78,140,.5), rgba(184,107,58,.35)); mix-blend-mode: soft-light;"></div>
+          </div>
+          <figcaption style="display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 8px 12px; margin-top: 14px;">
+            <span style="font-family: Italiana, Georgia, serif; font-size: 22px; color: #F1F0F4;">Puro, gelado</span>
+            <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .16em; color: rgba(217,217,227,.58);">BRUMA RESERVA · UMA PEDRA</span>
+          </figcaption>
+        </figure>
+      </div>
+      <figure data-reveal style="position: relative; margin-top: clamp(48px, 8vh, 96px); aspect-ratio: 21 / 9; min-height: 360px; overflow: hidden; border-radius: 3px; background: #15161A; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">
+        <img src="/assets/bruma/alambique-cobre.webp" alt="Detalhe de um alambique de cobre, com a superfície refletindo luz quente." loading="lazy" decoding="async" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; filter: saturate(.85) contrast(1.05);">
+        <div aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to top, rgba(14,15,17,.94), rgba(14,15,17,.2) 60%);"></div>
+        <figcaption style="position: absolute; left: clamp(20px, 4vw, 48px); right: clamp(20px, 4vw, 48px); bottom: clamp(20px, 4vw, 48px); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 16px 32px; min-width: 0;">
+          <div style="max-width: min(100%, 36rem); min-width: 0;">
+            <p style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F;">Do alambique ao navegador</p>
+            <h3 style="margin-top: 12px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(26px, 3.4vw, 50px); line-height: 1.06; color: #F1F0F4;">Depois do alambique, a cena continua no seu navegador.</h3>
+            <p style="margin-top: 10px; font-size: 14px; line-height: 1.6; color: rgba(217,217,227,.74);">O que vem a seguir mostra como este frasco foi construído.</p>
+          </div>
+          <a href="#cena" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; background: rgba(14,15,17,.5); border: 1px solid #B86B3A; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s;" style-hover="background: #B86B3A; color: #0E0F11;">Conhecer o processo</a>
+        </figcaption>
+      </figure>
+      <p style="margin-top: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; line-height: 1.7; color: rgba(217,217,227,.5);">FOTOGRAFIAS DE BANCO (UNSPLASH), USADAS COMO REFERÊNCIA DE DIREÇÃO DE ARTE.</p>
+    </section>
+
+    <section id="cena" data-bruma-sec data-screen-label="06 · Dentro da cena" style="position: relative; min-height: 100vh; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); gap: clamp(28px, 4vw, 80px); align-items: center; padding: clamp(16vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, calc((100vw - 899px) * 100), 150px) 14vh clamp(20px, 5vw, 72px); min-width: 0;">
+      <div style="max-width: min(100%, 40rem); min-width: 0;">
+        <p data-reveal style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; text-transform: uppercase; color: #D9A57F; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">06 · Dentro da cena</p>
+        <h2 data-reveal style="margin-top: 22px; font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(32px, 4.2vw, 62px); line-height: 1.06; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">O frasco que acompanhou você não é vídeo.</h2>
+        <p data-reveal style="margin-top: 24px; max-width: 48ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.8); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">Vidro, líquido, luz, botânicos e névoa são calculados no seu navegador enquanto você rola. A mesma cena adapta detalhe e movimento para continuar convincente no celular.</p>
+        <div data-reveal style="margin-top: 30px; border-bottom: 1px solid rgba(217,217,227,.12); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(217,217,227,.12);">
+            <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">01</b>
+            <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; color: #F1F0F4;">Produto mais desejável</h3>
+            <p style="grid-column: 2; margin-top: 5px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.66);">O visitante vê vidro, luz e líquido reagindo, não uma foto parada.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(217,217,227,.12);">
+            <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">02</b>
+            <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; color: #F1F0F4;">História que o visitante controla</h3>
+            <p style="grid-column: 2; margin-top: 5px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.66);">Cada capítulo avança no ritmo da rolagem, sem autoplay e sem espera.</p>
+          </div>
+          <div style="display: grid; grid-template-columns: 34px minmax(0, 1fr); column-gap: 16px; align-items: baseline; padding: 16px 0; border-top: 1px solid rgba(217,217,227,.12);">
+            <b style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; font-weight: 400; letter-spacing: .16em; color: #D9A57F;">03</b>
+            <h3 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(22px, 2.2vw, 30px); line-height: 1.1; color: #F1F0F4;">Qualidade que se adapta ao aparelho</h3>
+            <p style="grid-column: 2; margin-top: 5px; font-size: 14px; line-height: 1.5; color: rgba(217,217,227,.66);">A cena escolhe detalhe, resolução e movimento conforme o dispositivo e a preferência de quem navega.</p>
+          </div>
+        </div>
+        <div data-reveal style="display: flex; flex-wrap: wrap; gap: 12px 14px; margin-top: 28px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .3s, transform .9s cubic-bezier(.22, 1, .36, 1) .3s;">
+          <button type="button" aria-expanded="{{ dadosAbertos }}" aria-controls="dados-cena" onClick="{{ toggleDados }}" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; background: rgba(184,107,58,.14); border: 1px solid #B86B3A; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, transform .15s;" style-hover="background: #B86B3A; color: #0E0F11;" style-active="transform: translateY(1px);">{{ dadosLabel }}</button>
+          <button type="button" aria-pressed="{{ wireManual }}" onClick="{{ toggleWire }}" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; background: transparent; border: 1px solid rgba(217,217,227,.28); border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s, transform .15s;" style-hover="border-color: #D9A57F; color: #D9A57F;" style-active="transform: translateY(1px);">{{ wireLabel }}</button>
+        </div>
+        <sc-if value="{{ dadosAbertos }}" hint-placeholder-val="{{ false }}">
+          <div id="dados-cena" style="margin-top: 22px; display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1px; background: rgba(217,217,227,.12); border: 1px solid rgba(217,217,227,.12);">
+            <div style="background: #0E0F11; padding: 14px 16px;">
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; color: rgba(217,217,227,.6);">FPS MEDIDO</span>
+              <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2vw, 26px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ fps }}</b>
+            </div>
+            <div style="background: #0E0F11; padding: 14px 16px;">
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; color: rgba(217,217,227,.6);">TRIÂNGULOS POR QUADRO</span>
+              <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2vw, 26px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ tris }}</b>
+            </div>
+            <div style="background: #0E0F11; padding: 14px 16px;">
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; color: rgba(217,217,227,.6);">CHAMADAS DE DESENHO</span>
+              <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2vw, 26px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ calls }}</b>
+            </div>
+            <div style="background: #0E0F11; padding: 14px 16px;">
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; color: rgba(217,217,227,.6);">RESOLUÇÃO · DPR</span>
+              <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: clamp(20px, 2vw, 26px); color: #F1F0F4; font-variant-numeric: tabular-nums;">{{ res }}</b>
+            </div>
+            <div style="background: #0E0F11; padding: 14px 16px; grid-column: 1 / -1;">
+              <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .18em; color: rgba(217,217,227,.6);">PERFIL DE QUALIDADE ATIVO</span>
+              <b style="display: block; margin-top: 8px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-weight: 500; font-size: 15px; letter-spacing: .04em; color: #F1F0F4;">{{ perfilLabel }}</b>
+              <span style="display: block; margin-top: 8px; font-size: 13px; line-height: 1.5; color: rgba(217,217,227,.62);">Medidos agora, neste dispositivo. Three.js sobre WebGL 2, uma cena, sem vídeo.</span>
+            </div>
+          </div>
+        </sc-if>
+        <p data-reveal style="margin-top: 26px; max-width: 46ch; font-size: 14px; line-height: 1.6; color: rgba(217,217,227,.62); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .35s, transform .9s cubic-bezier(.22, 1, .36, 1) .35s;">Uma cena assim é um projeto especial, desenhado sob medida para cada marca.</p>
+      </div>
+      <div aria-hidden="true" style="min-height: 1px;"></div>
+    </section>
+
+    <section id="assinatura" data-bruma-sec data-screen-label="07 · A assinatura" style="position: relative; padding: clamp(22vh, calc((900px - 100vw) * 100), 46vh) clamp(20px, 5vw, 72px) 0; min-width: 0;">
+      <div style="max-width: min(100%, 62rem); min-width: 0;">
+        <h2 data-reveal style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(36px, 5.4vw, 80px); line-height: 1.04; color: #F1F0F4; text-shadow: 0 2px 28px rgba(14,15,17,.65); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1), transform .9s cubic-bezier(.22, 1, .36, 1);">A BRUMA é fictícia. O que você navegou, não.</h2>
+        <p data-reveal style="margin-top: 26px; max-width: 54ch; font-size: 17px; line-height: 1.65; color: rgba(217,217,227,.8); opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .1s, transform .9s cubic-bezier(.22, 1, .36, 1) .1s;">Este estudo foi criado pela Kyber Tech para mostrar como direção de arte, 3D e desenvolvimento podem transformar a percepção de uma marca. Projetos assim são desenhados sob medida, direto com quem vai desenvolver.</p>
+        <sc-if value="{{ ui }}" hint-placeholder-val="{{ true }}">
+          <div data-reveal style="display: flex; flex-wrap: wrap; gap: 12px 14px; margin-top: 34px; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .2s, transform .9s cubic-bezier(.22, 1, .36, 1) .2s;">
+            <a href="https://somoskyber.com.br/fale?origem=portfolio-bruma" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; background: #B86B3A; border: 1px solid #B86B3A; border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #0E0F11; transition: background .3s, border-color .3s, transform .15s;" style-hover="background: #D9A57F; border-color: #D9A57F; color: #0E0F11;" style-active="transform: translateY(1px);">Quero uma experiência sob medida</a>
+            <a href="https://somoskyber.com.br" style="display: inline-flex; align-items: center; gap: 12px; min-height: 48px; padding: 0 22px; border: 1px solid rgba(184,107,58,.75); border-radius: 2px; font-size: 12px; font-weight: 500; letter-spacing: .16em; text-transform: uppercase; color: #F1F0F4; transition: background .3s, color .3s, border-color .3s;" style-hover="background: #B86B3A; color: #0E0F11; border-color: #B86B3A;">Conhecer a Kyber Tech</a>
+          </div>
+        </sc-if>
+        <div data-reveal style="margin-top: clamp(56px, 9vh, 96px); display: flex; align-items: center; gap: 28px; flex-wrap: wrap; opacity: 0; transform: translateY(22px); transition: opacity .9s cubic-bezier(.22, 1, .36, 1) .25s, transform .9s cubic-bezier(.22, 1, .36, 1) .25s;">
+          <img src="/assets/kyber/logo-nav.webp" alt="Kyber Tech" width="200" height="101" style="width: 200px; height: auto;">
+          <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 10px; letter-spacing: .22em; line-height: 1.9; color: rgba(217,217,227,.62);">DESIGN · ENGENHARIA · ESTRATÉGIA<br>GOIÂNIA · ATENDIMENTO EM TODO O BRASIL</span>
+        </div>
+      </div>
+      <footer style="margin-top: clamp(96px, 16vh, 170px); border-top: 1px solid rgba(217,217,227,.12); padding: 34px 0 calc(44px + env(safe-area-inset-bottom)); display: flex; flex-wrap: wrap; gap: 16px 48px; align-items: baseline; justify-content: space-between; background: rgba(14,15,17,.82); box-shadow: 0 0 0 clamp(20px, 5vw, 72px) rgba(14,15,17,.82); min-width: 0;">
+        <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: rgba(217,217,227,.6);">BRUMA · ESTUDO AUTORAL 2026</span>
+        <span style="font-size: 12px; line-height: 1.7; color: rgba(217,217,227,.6); max-width: 58ch;">Projeto conceitual criado pela Kyber Tech. Marca, produtos e dados da destilaria são fictícios. Fotografias de banco usadas como referência de direção de arte. Aprecie com moderação.</span>
+        <a href="https://somoskyber.com.br" style="font-size: 12px; letter-spacing: .14em; color: #F1F0F4; border-bottom: 1px solid rgba(184,107,58,.6); padding-bottom: 3px;">Desenvolvido por Kyber Tech</a>
+      </footer>
+    </section>
+
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;qualidade&quot;: { &quot;editor&quot;: &quot;enum&quot;, &quot;options&quot;: [&quot;auto&quot;, &quot;alta&quot;, &quot;media&quot;, &quot;leve&quot;, &quot;poster&quot;], &quot;default&quot;: &quot;auto&quot;, &quot;tsType&quot;: &quot;'auto' | 'alta' | 'media' | 'leve' | 'poster'&quot;, &quot;section&quot;: &quot;Cena 3D&quot; },
+  &quot;velocidade&quot;: { &quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 1, &quot;min&quot;: 0.25, &quot;max&quot;: 2.5, &quot;step&quot;: 0.05, &quot;tsType&quot;: &quot;number&quot;, &quot;section&quot;: &quot;Cena 3D&quot; },
+  &quot;capturaSemUI&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: false, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Gravação&quot; }
+}">
+class Component extends DCLogic {
+  static CAPS = [
+    { id: 'frasco', num: '00', nome: 'O frasco', frase: 'Fotografia de produto que ganha vida no navegador.' },
+    { id: 'nevoa', num: '01', nome: 'A névoa', frase: 'A madrugada do Cerrado que deu nome ao gin.' },
+    { id: 'botanicos', num: '02', nome: 'Seis botânicos', frase: 'Um herbário orbital ao redor do frasco.' },
+    { id: 'ritual', num: '03', nome: 'O ritual da cor', frase: 'Violeta no frasco, rosé no copo.' },
+    { id: 'expressoes', num: '04', nome: 'Três expressões', frase: 'Original, Rosé e Reserva, uma casa em três leituras.' },
+    { id: 'servir', num: '05', nome: 'Como servir', frase: 'Gelo grande, tônica seca e nada de canudo.' },
+    { id: 'cena', num: '06', nome: 'Dentro da cena', frase: 'O frasco não é vídeo: é calculado enquanto você rola.' },
+    { id: 'assinatura', num: '07', nome: 'A assinatura', frase: 'A BRUMA é fictícia. O que você navegou, não.' },
+  ];
+  static BOT = [
+    { n: '01', nome: 'Zimbro', nota: 'A espinha dorsal. Resina, pinho e um final seco.' },
+    { n: '02', nome: 'Pequi', nota: 'Só o caroço, tostado. Nota untuosa e quente, sem a polpa.' },
+    { n: '03', nome: 'Baru', nota: 'Castanha do Cerrado, tosta leve. Fundo amanteigado.' },
+    { n: '04', nome: 'Capim-limão', nota: 'O frescor que abre o gole antes do zimbro chegar.' },
+    { n: '05', nome: 'Laranja-da-terra', nota: 'Casca seca ao sol. Amargor cítrico, de quintal goiano.' },
+    { n: '06', nome: 'Flor fada-azul', nota: 'Dá o violeta. Encontra a tônica e vira rosé em segundos.' },
+  ];
+  static EXP = [
+    { nome: 'Bruma Original', curto: 'Original', teor: '44% · 750 ML', cor: '#5B60C8', sombra: 'rgba(91,96,200,.9)', desc: 'Zimbro, pequi e flor fada-azul. O violeta que vira rosé.', notas: 'Nariz: zimbro e capim-limão. Boca: pequi tostado, textura untuosa. Final: seco e longo.' },
+    { nome: 'Bruma Rosé', curto: 'Rosé', teor: '42% · 750 ML', cor: '#CF6E90', sombra: 'rgba(207,110,144,.9)', desc: 'Infusão de cagaita e hibisco depois da destilação. Doce só no nariz.', notas: 'Nariz: cagaita e hibisco. Boca: fruta vermelha e acidez viva. Final: floral, curto.' },
+    { nome: 'Bruma Reserva', curto: 'Reserva', teor: '46% · 750 ML', cor: '#C27A2E', sombra: 'rgba(194,122,46,.9)', desc: 'Seis meses em barril de amburana. Baunilha, canela e madeira quente.', notas: 'Nariz: baunilha e amburana. Boca: canela e casca de laranja. Final: madeira quente.' },
+  ];
+  // Uma pose de repouso por capítulo; a transição acontece na metade final de uma e na inicial da seguinte.
+  static P(o) { return Object.assign({ bx: 0, by: 0, bz: 0, brz: 0, bs: 1, spin: 0, sway: 0.05, yaw: 0, title: 0, tX: 0, tY: 0, botSpread: 2.4, botVis: 0, botCx: 0, botCy: 0, botCz: 0, botSpeed: 1, fx: 0.3, fy: 0.1, fz: 1, wire: 0, grid: 0, camZ: 9, camY: 0.3, trio: 0, glow: 0.8, rest: 0, fog: 0.4, cyan: 0 }, o); }
+  static POSES_D = [
+    this.P({ bx: 1.5, by: -0.1, bs: 0.86, sway: 0.06, yaw: 0, title: 1, tX: 0.9, tY: 0.55, botSpread: 1, botVis: 0.9, botCx: 1.5, botCy: 0, glow: 1, rest: 1, fog: 0.6 }),
+    this.P({ bx: 2.1, by: -0.22, brz: -0.14, bs: 0.86, yaw: 0.9, botSpread: 0.8, botVis: 0.6, botCx: 2.1, botCy: -0.1, glow: 0.7, fog: 1 }),
+    this.P({ bx: 1.6, by: 0.15, bz: -0.6, brz: 0.05, bs: 0.62, yaw: 2.4, botSpread: 1, botVis: 1, botCx: 1.6, botCy: 0.15, botCz: -0.6, fx: 0.4, fy: 0.15, fz: 1.2, glow: 0.6, fog: 0.5 }),
+    this.P({ bx: 1.25, by: -0.14, bz: 0.5, brz: -0.12, bs: 0.92, yaw: 5.98, camY: 0.2, glow: 0.95, fog: 0.35 }),
+    this.P({ bx: 1.0, by: -0.05, bs: 0.8, yaw: 6.28, trio: 1, camZ: 9.4, glow: 0.8, rest: 1, fog: 0.3 }),
+    this.P({ by: -6.5, bz: -3, bs: 0.5, yaw: 6.6, glow: 0.2, fog: 0.2 }),
+    this.P({ bx: 1.9, by: -0.1, brz: 0.08, bs: 1, spin: 0.3, yaw: 12.57, wire: 1, grid: 1, glow: 0.45, rest: 1, fog: 0.2 }),
+    this.P({ bx: 2.2, by: 0.15, bz: -1.2, bs: 0.74, yaw: 13.2, botSpread: 0.9, botVis: 0.5, botCx: 2.2, botCy: 0.3, botCz: -1.2, glow: 0.8, cyan: 1, fog: 0.4 }),
+  ];
+  static POSES_M = [
+    this.P({ by: 0.85, bs: 0.8, sway: 0.06, title: 1, tX: 0, tY: 0.95, botSpread: 0.78, botVis: 0.9, botCy: 0.9, glow: 1, rest: 1, fog: 0.6 }),
+    this.P({ bx: 0.3, by: 1.35, brz: -0.2, bs: 0.58, yaw: 0.9, botSpread: 0.6, botVis: 0.6, botCx: 0.3, botCy: 1.35, glow: 0.7, fog: 1 }),
+    this.P({ by: 1.65, bz: -0.5, bs: 0.42, yaw: 2.4, botSpread: 0.72, botVis: 1, botCy: 1.65, botCz: -0.5, fx: 0, fy: 0.3, fz: 1.4, glow: 0.6, fog: 0.5 }),
+    this.P({ by: 1.3, bz: 0.3, brz: -0.1, bs: 0.8, yaw: 5.98, glow: 0.95, fog: 0.35 }),
+    this.P({ by: 1.3, bs: 0.62, yaw: 6.28, trio: 1, glow: 0.8, rest: 1, fog: 0.3 }),
+    this.P({ by: -7, bz: -3, bs: 0.4, yaw: 6.6, glow: 0.2, fog: 0.2 }),
+    this.P({ by: 1.4, brz: 0.1, bs: 0.64, spin: 0.3, yaw: 12.57, wire: 1, grid: 1, glow: 0.45, rest: 1, fog: 0.2 }),
+    this.P({ by: 1.25, bz: -1, bs: 0.6, yaw: 13.2, botSpread: 0.8, botVis: 0.5, botCy: 1.4, botCz: -1, glow: 0.8, cyan: 1, fog: 0.4 }),
+  ];
+
+  state = { sec: 0, mobile: false, soCena: false, sceneOk: null, perdido: false, perfil: 'alta', wireManual: false, dadosAbertos: false, indiceAberto: false, botAtivo: -1, expressao: 0, notasAbertas: false, rose: false, ui: true, tris: '0', calls: '0', fps: '0', res: '0 × 0 · 1×' };
+  canvasRef = React.createRef(); marcadorRef = React.createRef(); barraRef = React.createRef();
+  indiceBtnRef = React.createRef(); fecharRef = React.createRef(); painelRef = React.createRef();
+
+  componentDidMount() {
+    const q = new URLSearchParams(location.search);
+    this.captura = q.get('capture') === '1' || !!this.props.capturaSemUI;
+    this.semUI = q.get('ui') === '0' || !!this.props.capturaSemUI;
+    this.buffer = q.get('buffer') === '1';
+    this.qualidadeUrl = q.get('quality');
+    this.capInicial = parseInt(q.get('chapter') || '', 10);
+    // Take de produto: `?pose=N` (ou brumaPose(N) no console) trava a cena no quadro de repouso do capítulo N, sem rolar.
+    const pf = parseInt(q.get('pose') || '', 10);
+    this.poseFixa = isNaN(pf) ? null : Math.max(0, Math.min(7, pf)) + 0.5;
+    window.brumaPose = (n) => { this.poseFixa = n === null || n === undefined ? null : Math.max(0, Math.min(7, +n)) + 0.5; this.setState({ soCena: this.poseFixa !== null }); };
+    if (this.poseFixa !== null) this.setState({ soCena: true });
+    this.cur = 0; this.target = 0; this.secs = []; this.parX = 0; this.parY = 0; this.last = 0; this.raf = 0;
+    this.freeze = false; this.podeRender = false; this.pronto = false; this.fontesOk = false; this.cenaDecidida = false;
+    this.mq = window.matchMedia('(max-width: 899px)');
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.onMq = () => { this.setState({ mobile: this.mq.matches }); this.measure(); this.readTarget(); };
+    if (this.mq.addEventListener) this.mq.addEventListener('change', this.onMq); else this.mq.addListener(this.onMq);
+    const perfil = this.perfilDesejado();
+    this.setState({ mobile: this.mq.matches, ui: !this.semUI, perfil });
+    this.onScroll = () => this.readTarget();
+    this.onResize = () => { this.measure(); this.readTarget(); if (this.scene) this.scene.resize(); };
+    this.onPointer = (e) => {
+      if (this.mq.matches || this.captura) return;
+      this.parX = (e.clientX / window.innerWidth - 0.5) * 2;
+      this.parY = (e.clientY / window.innerHeight - 0.5) * 2;
+    };
+    this.onVis = () => {
+      if (document.hidden) { cancelAnimationFrame(this.raf); this.raf = 0; }
+      else if (!this.raf) { this.last = 0; this.raf = requestAnimationFrame(this.tick); }
+    };
+    this.onKey = (e) => {
+      if (e.key === 'Escape') { if (this.state.indiceAberto) { e.preventDefault(); this.fecharIndice(); } return; }
+      if (this.state.indiceAberto || e.altKey || e.ctrlKey || e.metaKey) return;
+      const t = e.target; if (t && /INPUT|TEXTAREA|SELECT/.test(t.tagName)) return;
+      if (e.key === ']') this.irPara(Math.min(7, this.state.sec + 1));
+      else if (e.key === '[') this.irPara(Math.max(0, this.state.sec - 1));
+      else if (/^[1-8]$/.test(e.key)) this.irPara(+e.key - 1);
+      else if (e.key === 'f' || e.key === 'F') this.freeze = !this.freeze;
+    };
+    window.addEventListener('scroll', this.onScroll, { passive: true });
+    window.addEventListener('resize', this.onResize);
+    window.addEventListener('load', this.onResize);
+    window.addEventListener('pointermove', this.onPointer, { passive: true });
+    window.addEventListener('keydown', this.onKey);
+    document.addEventListener('visibilitychange', this.onVis);
+    if (this.captura) document.body.style.cursor = 'none';
+    // Link com âncora: o conteúdo só existe depois de montar, então o salto nativo perdeu o alvo.
+    try { const alvo = location.hash && document.querySelector(location.hash); if (alvo) window.scrollTo(0, alvo.getBoundingClientRect().top + (window.scrollY || 0)); } catch (e) {}
+    this.measure(); this.readTarget(); this.cur = this.target;
+    this.remeasure = setTimeout(() => { this.measure(); this.readTarget(); if (!isNaN(this.capInicial)) this.irPara(Math.max(0, Math.min(7, this.capInicial)), true); }, 800);
+    this.reveals();
+    const fontes = document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve();
+    Promise.race([fontes, new Promise((r) => setTimeout(r, 1800))]).then(() => { this.podeRender = true; this.fontesOk = true; this.checarPronto(); });
+    if (perfil === 'poster') { this.setState({ sceneOk: false }); this.cenaDecidida = true; this.checarPronto(); }
+    else this.loadScene(perfil);
+    this.statTimer = setInterval(() => this.pushStats(), 500);
+    this.raf = requestAnimationFrame(this.tick);
+  }
+
+  componentDidUpdate(prev, prevState) {
+    const p = this.props || {}, q = prev || {};
+    if (p.capturaSemUI !== q.capturaSemUI) {
+      this.captura = !!p.capturaSemUI || new URLSearchParams(location.search).get('capture') === '1';
+      this.setState({ ui: !p.capturaSemUI && new URLSearchParams(location.search).get('ui') !== '0' });
+      document.body.style.cursor = this.captura ? 'none' : '';
+    }
+    if (this.scene && p.velocidade !== q.velocidade) this.scene.setOptions({ speed: +(p.velocidade ?? 1) });
+    if (p.qualidade !== q.qualidade) { const perfil = this.perfilDesejado(); this.setState({ perfil }); this.reiniciarCena(perfil); }
+  }
+
+  componentWillUnmount() {
+    this.desmontado = true;
+    cancelAnimationFrame(this.raf);
+    clearTimeout(this.remeasure); clearInterval(this.statTimer);
+    window.removeEventListener('scroll', this.onScroll);
+    window.removeEventListener('resize', this.onResize);
+    window.removeEventListener('load', this.onResize);
+    window.removeEventListener('pointermove', this.onPointer);
+    window.removeEventListener('keydown', this.onKey);
+    document.removeEventListener('visibilitychange', this.onVis);
+    document.body.style.overflow = ''; document.body.style.cursor = '';
+    if (this.mq) { if (this.mq.removeEventListener) this.mq.removeEventListener('change', this.onMq); else this.mq.removeListener(this.onMq); }
+    if (this.io) this.io.disconnect();
+    if (this.scene) { try { this.scene.destroy(); } catch (e) {} this.scene = null; }
+  }
+
+  perfilDesejado() {
+    const q = this.qualidadeUrl || this.props.qualidade || 'auto';
+    if (q === 'alta' || q === 'media' || q === 'leve' || q === 'poster') return q;
+    const con = navigator.connection;
+    if (con && con.saveData) return 'poster';
+    const coarse = window.matchMedia('(pointer: coarse)').matches;
+    const mem = navigator.deviceMemory, cpu = navigator.hardwareConcurrency;
+    if (this.mq.matches || coarse) return (mem && mem <= 2) || (cpu && cpu <= 3) ? 'leve' : 'media';
+    return 'alta';
+  }
+
+  checarPronto() {
+    if (this.pronto || !this.fontesOk || !this.cenaDecidida) return;
+    this.pronto = true;
+    document.documentElement.setAttribute('data-bruma-ready', '1');
+    console.log('[bruma] READY · perfil ' + this.state.perfil);
+    if (this.captura) document.title = 'READY · BRUMA V2';
+  }
+
+  async loadScene(perfil) {
+    const canvas = this.canvasRef.current;
+    if (!canvas) { this.setState({ sceneOk: false }); this.cenaDecidida = true; this.checarPronto(); return; }
+    try {
+      const mod = await import(new URL('bruma-scene-v2.js', document.baseURI).href);
+      if (this.desmontado) return;
+      this.scene = mod.createScene({ canvas, profile: perfil, reduced: this.reduced, speed: +(this.props.velocidade ?? 1), preserve: this.buffer });
+      if (!this.ctxOk) {
+        this.ctxOk = true;
+        canvas.addEventListener('webglcontextlost', (e) => { e.preventDefault(); this.setState({ perdido: true }); });
+        canvas.addEventListener('webglcontextrestored', () => { this.setState({ perdido: false }); });
+      }
+      this.setState({ sceneOk: true, perdido: false });
+    } catch (e) {
+      console.error('[bruma] cena 3D indisponível, ficando com o pôster', e);
+      this.setState({ sceneOk: false });
+    }
+    this.cenaDecidida = true; this.checarPronto();
+  }
+  reiniciarCena(perfil) {
+    if (this.scene) { try { this.scene.destroy(); } catch (e) {} this.scene = null; }
+    if (perfil === 'poster') { this.setState({ sceneOk: false, perdido: false }); return; }
+    this.setState({ sceneOk: null, perdido: false });
+    this.loadScene(perfil);
+  }
+  recarregar = () => { location.reload(); };
+
+  measure() {
+    const sy = window.scrollY || window.pageYOffset || 0;
+    this.secs = Array.from(document.querySelectorAll('[data-bruma-sec]')).map((el) => { const r = el.getBoundingClientRect(); return { top: r.top + sy, h: Math.max(1, r.height) }; });
+  }
+  readTarget() {
+    const n = this.secs.length; if (!n) return;
+    const y = (window.scrollY || window.pageYOffset || 0) + window.innerHeight / 2;
+    let t = 0;
+    for (let i = 0; i < n; i++) { const s = this.secs[i]; if (y < s.top) break; t = i + Math.min(1, (y - s.top) / s.h); }
+    this.target = Math.max(0, Math.min(n - 0.001, t));
+  }
+  irPara(i, imediato) {
+    const c = Component.CAPS[i]; const el = c && document.getElementById(c.id); if (!el) return;
+    window.scrollTo({ top: el.getBoundingClientRect().top + (window.scrollY || 0), behavior: imediato || this.reduced || this.captura ? 'auto' : 'smooth' });
+  }
+  poseAt(t) {
+    const P = this.state.mobile ? Component.POSES_M : Component.POSES_D;
+    const n = P.length, u = Math.max(0, Math.min(n - 1, t - 0.5)), i = Math.min(n - 2, Math.floor(u)), f = u - i;
+    const e = f < 0.5 ? 4 * f * f * f : 1 - Math.pow(-2 * f + 2, 3) / 2;
+    const a = P[i], b = P[i + 1], o = {};
+    for (const k in a) o[k] = a[k] + (b[k] - a[k]) * e;
+    return o;
+  }
+  static sstep(a, b, x) { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); }
+
+  tick = (now) => {
+    this.raf = requestAnimationFrame(this.tick);
+    const dt = this.last ? Math.min(0.05, (now - this.last) / 1000) : 0.016;
+    this.last = now;
+    if (this.poseFixa !== null) this.target = this.poseFixa;
+    const k = this.reduced ? 1 : 1 - Math.pow(1 - 0.085, dt * 60);
+    this.cur += (this.target - this.cur) * k;
+    if (Math.abs(this.target - this.cur) < 0.0002) this.cur = this.target;
+    const sec = Math.max(0, Math.min(7, Math.floor(this.target)));
+    if (sec !== this.state.sec) this.setState({ sec });
+    let bot = -1;
+    if (sec === 2) { const f = this.target - 2; bot = Math.max(-1, Math.min(5, Math.floor((f - 0.12) / 0.76 * 6))); }
+    if (bot !== this.state.botAtivo) this.setState({ botAtivo: bot });
+    const S = Component.sstep;
+    const liq = S(3.15, 3.6, this.cur) * (1 - S(3.92, 4.25, this.cur));
+    const rose = liq > 0.5;
+    if (rose !== this.state.rose) this.setState({ rose });
+    if (this.barraRef.current) this.barraRef.current.style.transform = 'scaleX(' + liq.toFixed(3) + ')';
+    if (this.marcadorRef.current) this.marcadorRef.current.style.top = (Math.max(0, Math.min(1, (this.cur - 0.5) / 7)) * 100).toFixed(2) + '%';
+    if (this.scene && this.podeRender && !this.state.perdido) {
+      const p = this.poseAt(this.cur);
+      if (this.state.wireManual) { p.wire = 1; p.grid = Math.max(p.grid, 1); }
+      this.scene.render(p, dt, now, { px: this.parX, py: this.parY, parallax: !this.captura && !this.state.mobile, liq, botFocus: bot, trioFocus: this.state.expressao, trioSingle: this.state.mobile, freeze: this.freeze });
+    }
+  };
+
+  pushStats() {
+    if (!this.scene || !this.state.dadosAbertos) return;
+    const s = this.scene.stats();
+    const f = (n) => Number(n || 0).toLocaleString('pt-BR');
+    this.setState({ tris: f(s.tris), calls: f(s.calls), fps: f(s.fps), res: f(s.w) + ' × ' + f(s.h) + ' · ' + (Math.round(s.dpr * 100) / 100) + '×' });
+  }
+
+  // Reveal falha aberto: sem IntersectionObserver, tudo aparece de uma vez.
+  reveals() {
+    const els = Array.from(document.querySelectorAll('[data-reveal]'));
+    const show = (el) => { el.style.opacity = '1'; el.style.transform = 'none'; };
+    try {
+      const io = new IntersectionObserver((ents) => { for (const e of ents) if (e.isIntersecting) { show(e.target); io.unobserve(e.target); } }, { rootMargin: '0px 0px -6% 0px', threshold: 0.02 });
+      els.forEach((el) => io.observe(el));
+      this.io = io;
+    } catch (e) { els.forEach(show); }
+  }
+
+  abrirIndice = () => {
+    this.scrollAntes = document.body.style.overflow; document.body.style.overflow = 'hidden';
+    this.setState({ indiceAberto: true });
+    // Foco entra no painel depois do commit (o ref do sc-if só existe após a montagem).
+    let tent = 0; const focar = () => { const f = this.fecharRef.current; if (f) f.focus(); else if (tent++ < 20) requestAnimationFrame(focar); };
+    requestAnimationFrame(() => setTimeout(focar, 0));
+  };
+  fecharIndice = () => { document.body.style.overflow = this.scrollAntes || ''; this.setState({ indiceAberto: false }); const b = this.indiceBtnRef.current; if (b) setTimeout(() => b.focus(), 0); };
+  fecharPorFora = (e) => { if (e.target === e.currentTarget) this.fecharIndice(); };
+  teclaPainel = (e) => {
+    if (e.key !== 'Tab' || !this.painelRef.current) return;
+    const f = Array.from(this.painelRef.current.querySelectorAll('a[href], button:not([disabled])'));
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  toggleWire = () => this.setState((s) => ({ wireManual: !s.wireManual }));
+  toggleDados = () => this.setState((s) => ({ dadosAbertos: !s.dadosAbertos }));
+  toggleNotas = () => this.setState((s) => ({ notasAbertas: !s.notasAbertas }));
+
+  renderVals() {
+    const s = this.state, C = Component.CAPS;
+    const ativo = C[s.sec] || C[0];
+    const regua = C.map((c, i) => { const a = i === s.sec; return { href: '#' + c.id, num: c.num, nome: c.nome, aria: c.num + ' · ' + c.nome, top: (i / 7 * 100).toFixed(2) + '%', ativo: a, current: a ? 'true' : 'false', cor: a ? '#F1F0F4' : 'rgba(217,217,227,.5)', tick: a ? '18px' : '8px', tickCor: a ? '#D9A57F' : 'rgba(184,107,58,.5)' }; });
+    const capitulos = C.map((c, i) => ({ href: '#' + c.id, num: c.num, nome: c.nome, frase: c.frase, current: i === s.sec ? 'true' : 'false', corNum: i === s.sec ? '#D9A57F' : 'rgba(217,217,227,.35)' }));
+    const algum = s.botAtivo >= 0;
+    const botanicos = Component.BOT.map((b, i) => { const foco = s.botAtivo === i; return { n: b.n, nome: b.nome, nota: b.nota, op: algum && !foco ? '.5' : '1', corNum: foco ? '#F1F0F4' : '#D9A57F', corNome: foco ? '#F1F0F4' : i === 5 ? '#A9B0F0' : 'rgba(241,240,244,.88)', opFoco: foco ? '1' : '0' }; });
+    const expressoes = Component.EXP.map((x, i) => { const a = i === s.expressao; return { nome: x.nome, curto: x.curto, teor: x.teor, cor: x.cor, sombra: x.sombra, desc: x.desc, ativa: a, op: a ? '1' : '.55', fundo: a ? '#B86B3A' : 'transparent', corTexto: a ? '#0E0F11' : 'rgba(217,217,227,.8)', selecionar: () => this.setState({ expressao: i }) }; });
+    const ex = Component.EXP[s.expressao] || Component.EXP[0];
+    const perfilNome = { alta: 'Alta · transmissão completa, DPR até 2', media: 'Média · vidro leve com reflexos assados, DPR até 1,5', leve: 'Leve · menos geometria e partículas, DPR até 1,25', poster: 'Pôster · cena estática' }[s.perfil] || s.perfil;
+    let nota = '';
+    if (s.perdido) nota = 'A cena 3D foi pausada pelo navegador. Você está vendo o pôster.';
+    else if (s.perfil === 'poster' && s.sceneOk === false) nota = 'Modo economia de dados: pôster estático da cena, navegação completa.';
+    else if (s.sceneOk === false) nota = 'Cena 3D indisponível neste dispositivo: você está vendo o pôster.';
+    return {
+      canvasRef: this.canvasRef, marcadorRef: this.marcadorRef, barraRef: this.barraRef, indiceBtnRef: this.indiceBtnRef, fecharRef: this.fecharRef, painelRef: this.painelRef,
+      desktop: !s.mobile, mobile: s.mobile, ui: s.ui && !s.soCena, desktopUI: !s.mobile && s.ui && !s.soCena, mobileUI: s.mobile && s.ui && !s.soCena, visConteudo: s.soCena ? 'hidden' : 'visible',
+      regua, capitulos, capMobile: ativo.num + '/07',
+      indiceAberto: s.indiceAberto, abrirIndice: this.abrirIndice, fecharIndice: this.fecharIndice, fecharPorFora: this.fecharPorFora, teclaPainel: this.teclaPainel,
+      semCena: s.sceneOk === false || s.perdido, carregando: s.sceneOk === null && s.perfil !== 'poster', perdido: s.perdido, mostrarNota: !!nota, notaCena: nota, recarregar: this.recarregar,
+      posterLeft: s.mobile ? '50%' : '58%', posterTop: s.mobile ? '36%' : '50%', posterEsc: s.mobile ? '0.72' : '1', posterTituloTop: s.mobile ? '34%' : '42%',
+      botanicos, expressoes, expressaoNome: ex.nome, expressaoTeor: ex.teor, expressaoDesc: ex.desc, expressaoNotas: ex.notas, expressaoCor: ex.cor, expressaoSombra: ex.sombra,
+      notasAbertas: s.notasAbertas, toggleNotas: this.toggleNotas, notasLabel: s.notasAbertas ? 'Fechar notas' : 'Explorar notas',
+      liqTexto: s.rose ? 'Agora: rosé no copo' : 'Agora: violeta no frasco',
+      dadosAbertos: s.dadosAbertos, toggleDados: this.toggleDados, dadosLabel: s.dadosAbertos ? 'Fechar dados da cena' : 'Ver dados da cena',
+      tris: s.tris, calls: s.calls, fps: s.fps, res: s.res, perfilLabel: perfilNome,
+      toggleWire: this.toggleWire, wireManual: s.wireManual, wireLabel: s.wireManual ? 'Voltar ao vidro' : 'Ver a malha',
+    };
+  }
+}
+</script>
+</body>
+</html>

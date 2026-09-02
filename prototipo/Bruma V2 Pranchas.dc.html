@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="design_doc_mode" content="canvas">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Karla:wght@300..700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; background: #08080B; }
+    body { color: #D9D9E3; font-family: Karla, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #D9D9E3; text-decoration: none; }
+    a:hover { color: #D9A57F; }
+    h1, h2, p { margin: 0; }
+  </style>
+</helmet>
+<div style="min-height: 100vh; padding: 40px 48px 80px; display: flex; flex-direction: column; gap: 36px; color: #D9D9E3; font-family: Karla, system-ui, sans-serif;">
+  <header style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px 32px;">
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+      <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; color: #D9A57F;">BRUMA V2 · PRANCHAS AO VIVO</span>
+      <h1 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 40px; line-height: 1; color: #F1F0F4;">1440 · 390 · 360</h1>
+      <p style="max-width: 62ch; font-size: 14px; line-height: 1.6; color: rgba(217,217,227,.7);">Cada quadro é a experiência real rodando dentro de uma janela do tamanho indicado. Role dentro de cada quadro para percorrer os oito capítulos. O perfil de qualidade é escolhido por cada janela (alta no desktop, média nos celulares).</p>
+    </div>
+    <nav style="display: flex; flex-wrap: wrap; gap: 18px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .16em;">
+      <a href="Bruma Gin V2.dc.html">ABRIR A V2 →</a>
+      <a href="Bruma V2 Handoff.dc.html">HANDOFF →</a>
+      <a href="v1/Bruma Gin.dc.html">V1 (REFERÊNCIA) →</a>
+    </nav>
+  </header>
+
+  <section style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px;">
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>DESKTOP · 1440 × 900</span><span>ESCALA 0,6</span></figcaption>
+      <div style="width: 864px; height: 540px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 em 1440 por 900" src="Bruma Gin V2.dc.html" style="width: 1440px; height: 900px; border: 0; transform: scale(0.6); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>CELULAR · 390 × 844</span><span>ESCALA 0,64</span></figcaption>
+      <div style="width: 250px; height: 540px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 em 390 por 844" src="Bruma Gin V2.dc.html" style="width: 390px; height: 844px; border: 0; transform: scale(0.64); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>CELULAR · 360 × 800</span><span>ESCALA 0,675</span></figcaption>
+      <div style="width: 243px; height: 540px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 em 360 por 800" src="Bruma Gin V2.dc.html" style="width: 360px; height: 800px; border: 0; transform: scale(0.675); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+  </section>
+
+  <section style="display: flex; flex-wrap: wrap; align-items: flex-start; gap: 40px;">
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>TABLET · 768 × 1024</span><span>ESCALA 0,5</span></figcaption>
+      <div style="width: 384px; height: 512px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 em 768 por 1024" src="Bruma Gin V2.dc.html" style="width: 768px; height: 1024px; border: 0; transform: scale(0.5); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>TAKE 9:16 · 1080 × 1920 · SEM UI</span><span>ESCALA 0,2667</span></figcaption>
+      <div style="width: 288px; height: 512px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 em 1080 por 1920 sem interface" src="Bruma Gin V2.dc.html?capture=1&amp;ui=0&amp;quality=alta" style="width: 1080px; height: 1920px; border: 0; transform: scale(0.2667); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+    <figure style="margin: 0; display: flex; flex-direction: column; gap: 12px;">
+      <figcaption style="display: flex; justify-content: space-between; gap: 16px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .18em; color: rgba(217,217,227,.7);"><span>PÔSTER (SEM WEBGL) · 1440 × 900</span><span>ESCALA 0,4</span></figcaption>
+      <div style="width: 576px; height: 360px; overflow: hidden; border: 1px solid rgba(217,217,227,.14); border-radius: 4px; background: #0E0F11;">
+        <iframe title="BRUMA V2 no modo pôster" src="Bruma Gin V2.dc.html?quality=poster" style="width: 1440px; height: 900px; border: 0; transform: scale(0.4); transform-origin: 0 0; display: block;"></iframe>
+      </div>
+    </figure>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>

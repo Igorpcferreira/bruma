@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&amp;family=Karla:wght@300..700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+  <style>
+    html, body { margin: 0; background: #0E0F11; }
+    body { color: #D9D9E3; font-family: Karla, system-ui, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: #F1F0F4; text-decoration: none; border-bottom: 1px solid rgba(184,107,58,.6); }
+    a:hover { color: #D9A57F; }
+    h1, h2, h3, p, ul, ol { margin: 0; }
+    ul, ol { padding-left: 1.2em; }
+    li { margin-top: 6px; line-height: 1.55; }
+  </style>
+</helmet>
+<div style="max-width: 860px; margin: 0 auto; padding: 56px clamp(20px, 5vw, 48px) 120px; display: flex; flex-direction: column; gap: 56px; font-size: 15px; line-height: 1.6; color: rgba(217,217,227,.82);">
+  <header style="display: flex; flex-direction: column; gap: 14px;">
+    <span style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .22em; color: #D9A57F;">BRUMA V2 · HANDOFF · KYBER TECH · 2026</span>
+    <h1 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: clamp(36px, 5vw, 56px); line-height: 1.04; color: #F1F0F4;">Destilado digital: o que mudou, como gravar, o que ainda falta.</h1>
+    <nav style="display: flex; flex-wrap: wrap; gap: 14px 22px; font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .16em;">
+      <a href="Bruma Gin V2.dc.html">PROTÓTIPO V2</a>
+      <a href="Bruma V2 Pranchas.dc.html">PRANCHAS 1440 · 390 · 360</a>
+      <a href="v1/Bruma Gin.dc.html">V1 (INTOCADA)</a>
+    </nav>
+  </header>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">1 · Arquivos</h2>
+    <ul>
+      <li><b style="color: #F1F0F4;">Bruma Gin V2.dc.html</b>: página, oito capítulos, header Régua de destilação, painel Índice, fallback, modo de captura.</li>
+      <li><b style="color: #F1F0F4;">bruma-scene-v2.js</b>: cena Three.js r169 (frasco, líquido, rótulo, botânicos, estúdio procedural, malha, perfis de qualidade).</li>
+      <li><b style="color: #F1F0F4;">assets/bruma/poster-hero.jpg</b>: pôster gerado da própria cena, usado quando não há WebGL, em Save-Data ou contexto perdido.</li>
+      <li><b style="color: #F1F0F4;">assets/kyber/</b>: logos reais da Kyber (usados só no capítulo 07).</li>
+      <li><b style="color: #F1F0F4;">v1/</b>: referência original, sem alterações.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">2 · V1 × V2</h2>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">COMERCIAL</h3>
+    <ul>
+      <li>Kyber aparece antes: capítulo 06 traduz técnica em três benefícios antes das métricas; 07 revela a marca com a headline recomendada.</li>
+      <li>Preços, Reservar e Agendar visita removidos. Entram Explorar notas e Conhecer o processo.</li>
+      <li>CTA final qualificado: Quero uma experiência sob medida (somoskyber.com.br/fale?origem=portfolio-bruma) e Conhecer a Kyber Tech.</li>
+      <li>Aviso ESTUDO CONCEITUAL no header, no Índice e no rodapé. Frase explícita de que uma cena assim é projeto sob medida.</li>
+    </ul>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">VISUAL</h3>
+    <ul>
+      <li>Frasco refeito: punt e fundo grosso, quina chanfrada, ombro com transição não perfeita, lábio e boca reais, parede visível (líquido a 90% do raio), menisco.</li>
+      <li>Vidro: transmissão, IOR 1,5, espessura 0,55, atenuação sutil, micro-rugosidade quase invisível, softboxes verticais longos no ambiente procedural.</li>
+      <li>Líquido: sem emissão constante. Cor por Fresnel (centro denso, borda luminosa) e frente de difusão violeta → rosé que atravessa o volume com ondulação.</li>
+      <li>Rótulo em 2048 px com quatro mapas: cor, rugosidade, metal (BRUMA em hot stamping de cobre) e relevo de papel.</li>
+      <li>T-cork com cortiça texturizada e cabeça de cobre chanfrada; colar de cobre com espessura; cobre com riscos escovados.</li>
+      <li>Botânicos reconhecíveis: zimbro com marca e bloom, pequi rugoso, baru amendoado, capim-limão em lâminas curvas, casca de laranja com espessura e poros, flor fada-azul em duas camadas, folhas com nervuras.</li>
+      <li>Sombra de contato e poça de luz quando o frasco está apoiado; header substituído pela Régua de destilação; botões deixam de ser pílulas.</li>
+    </ul>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">TÉCNICO</h3>
+    <ul>
+      <li>Poses com yaw explícito: o frasco descansa com o rótulo para a câmera e só gira nas transições com significado.</li>
+      <li>Bolhas com profundidade real (na parede interna, no hemisfério voltado à câmera), poucas e só na entrada e no ritual da cor.</li>
+      <li>preserveDrawingBuffer desligado por padrão (?buffer=1 liga). DPR adaptativo: cai 0,25 por vez se o FPS ficar abaixo de 38 por três segundos.</li>
+      <li>Perfis: alta (transmissão, DPR ≤ 2), media (vidro leve com reflexos assados e alfa por Fresnel, DPR ≤ 1,5), leve, poster.</li>
+      <li>Pausa com aba oculta, contexto WebGL perdido tratado com pôster e ação de recarga, dispose completo, seed determinística.</li>
+      <li>Acessibilidade: lang pt-BR, pular para o conteúdo, um H1, canvas aria-hidden, Índice com foco gerenciado, aria-expanded, Esc, alvos de 48 px, rótulo textual do estado violeta/rosé.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">3 · Modo de captura</h2>
+    <ul>
+      <li><code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">?capture=1</code>: cursor oculto, paralaxe de ponteiro desligada, saltos de âncora sem rolagem suave, READY no console, em <code style="font-family: 'JetBrains Mono', ui-monospace, monospace;">html[data-bruma-ready]</code> e no título da aba.</li>
+      <li><code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">&amp;ui=0</code>: oculta header, régua e CTAs para takes de produto.</li>
+      <li><code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">&amp;buffer=1</code>: liga preserveDrawingBuffer para gravadores que leem o canvas.</li>
+      <li><code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">&amp;quality=alta|media|leve|poster</code>: força o perfil. <code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">&amp;chapter=N</code>: abre no capítulo N (0 a 7).</li>
+      <li><code style="font-family: 'JetBrains Mono', ui-monospace, monospace; color: #D9A57F;">&amp;pose=N</code>: trava a cena no quadro de repouso do capítulo N sem conteúdo (stills e takes 9:16). No console, <code style="font-family: 'JetBrains Mono', ui-monospace, monospace;">brumaPose(N)</code> troca ao vivo.</li>
+      <li>Teclas: <b style="color: #F1F0F4;">[</b> e <b style="color: #F1F0F4;">]</b> capítulo anterior e seguinte, <b style="color: #F1F0F4;">1 a 8</b> saltam direto, <b style="color: #F1F0F4;">F</b> congela o tempo da cena, <b style="color: #F1F0F4;">Esc</b> fecha o Índice.</li>
+      <li>Entrada da hero (2,6 s): exposição 0 a 0,7 s · filete de cobre 0,15 a 1,15 s · reflexos 0,35 a 1,35 s · líquido enche 0,5 a 2,0 s · rótulo 1,3 a 1,9 s · botânicos 1,2 a 2,7 s · copy 1,4 s.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">4 · Storyboard</h2>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">16:9 · 30 A 40 S · 1920 × 1080</h3>
+    <ol>
+      <li>0 a 3 s · ?capture=1&amp;ui=0 · entrada da hero: filete de cobre, vidro, rótulo. Texto: Parece filme.</li>
+      <li>3 a 8 s · hero completa com BRUMA refratado, primeiro gesto de rolagem. Texto: Mas responde ao seu gesto.</li>
+      <li>8 a 14 s · capítulo 02, herbário orbital, foco em dois espécimes.</li>
+      <li>14 a 20 s · capítulo 03, violeta vira rosé. Sem texto.</li>
+      <li>20 a 25 s · capítulo 04, trio em composição; clique em Rosé e Reserva.</li>
+      <li>25 a 31 s · capítulo 06, Ver a malha. Texto: 3D em tempo real no navegador.</li>
+      <li>31 a 36 s · capítulo 07, revelação e CTA. Texto: A BRUMA é conceito. A tecnologia é real.</li>
+      <li>36 a 40 s · logo e URL. Texto: KYBER TECH · EXPERIÊNCIAS SOB MEDIDA.</li>
+    </ol>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">9:16 · 18 A 24 S · 1080 × 1920 · JANELA DE 1080 × 1920 OU 390 × 844 ESCALADA</h3>
+    <ol>
+      <li>0 a 2 s · ?pose=3&amp;ui=0 · macro do vidro e reflexo de cobre (frame após READY).</li>
+      <li>2 a 6 s · ?pose=0&amp;ui=0 · garrafa completa com BRUMA ao fundo.</li>
+      <li>6 a 10 s · página normal, capítulo 03, transformação violeta → rosé.</li>
+      <li>10 a 14 s · capítulos 02 e 04 em dois cortes.</li>
+      <li>14 a 18 s · capítulo 06, malha.</li>
+      <li>18 a 22 s · capítulo 07, assinatura Kyber.</li>
+      <li>22 a 24 s · CTA e URL.</li>
+    </ol>
+    <p>Safe areas: manter textos dentro de 86% da largura e fora dos 12% inferiores em Reels, TikTok e Shorts. Áudio só na peça social, com sound design licenciado; a versão de portfólio é MP4 mudo.</p>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">5 · Sistema visual, breakpoints, timings</h2>
+    <ul>
+      <li>Cores: grafite #0E0F11, texto #D9D9E3 e #F1F0F4, cobre #B86B3A e #D9A57F, violeta #5B60C8 (líquido denso #3B378E, borda #968CE8), rosé #CF6E90, âmbar #C27A2E, ciano Kyber #53E8FF (um reflexo, cap. 07).</li>
+      <li>Tipografia: Italiana (display), Karla (texto), JetBrains Mono (técnico). Todas Google Fonts, licença OFL; na produção, hospedar localmente.</li>
+      <li>Breakpoint único em 899 px: abaixo, header compacto, poses mobile, um frasco por vez em 04, Índice em tela cheia. Câmera: fov 26 (desktop), 32 (quadrado), 40 (retrato).</li>
+      <li>Rolagem: alvo = capítulo + fração; amortecimento independente de frame rate (1 − 0,915^(dt·60)); poses no centro de cada capítulo com ease in-out cúbico. Reveals: cubic-bezier(.22, 1, .36, 1), 0,9 s.</li>
+      <li>Ritual da cor: frente do líquido = smoothstep(3,15 → 3,60) no eixo de capítulos, volta ao violeta entre 3,92 e 4,25. Foco de botânico: seis faixas dentro do capítulo 02.</li>
+      <li>Movimento reduzido: sem giro, sem entrada, rolagem sem interpolação; composição final de cada capítulo permanece.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">6 · Assets e licenças</h2>
+    <ul>
+      <li>Three.js 0.169 (MIT), importado de unpkg no protótipo. Produção: dependência versionada no projeto, sem CDN em tempo de execução.</li>
+      <li>Ambiente de luz: procedural (PMREM de painéis emissivos). Nenhum HDRI remoto.</li>
+      <li>Fotografias (Unsplash License, referência de direção de arte; confirmar autor na página de cada foto antes de publicar e hospedar localmente): photo-1675370734208-120b43d3c7ac, photo-1592757242171-0bdf87f7d370, photo-1637518122612-60ac167cf93b, photo-1445140463371-d8036feedc2f.</li>
+      <li>Logos Kyber: fornecidos pela Kyber (assets/kyber). Pôster: gerado da própria cena.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">7 · O que já é viável no navegador e o que ainda exige produção</h2>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">JÁ FUNCIONA AQUI</h3>
+    <ul>
+      <li>Vidro com transmissão e refração do título, líquido com absorção aparente e mudança de cor por difusão, rótulo com hot stamping, cobre escovado, cortiça, botânicos procedurais, sombra de contato, perfis adaptativos, fallback e captura.</li>
+    </ul>
+    <h3 style="font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: .2em; color: #D9A57F;">EXIGE BLENDER, TEXTURAS PRÓPRIAS OU PRODUÇÃO EXTERNA</h3>
+    <ul>
+      <li>Fotorrealismo final do frasco: modelagem dedicada (GLB local com linha de molde, variação do fundo, chanfros reais), texturas PBR próprias do papel e da cortiça, normal maps.</li>
+      <li>Superfície do líquido fisicamente correta em inclinação forte (hoje a coreografia limita a inclinação a cerca de 7°).</li>
+      <li>Bloom e profundidade de campo reais (pós-processamento com EffectComposer exige import map / bundler). Hoje: grão e vinheta em CSS, sem bloom.</li>
+      <li>Sombras projetadas do vidro (caustics), botânicos escaneados ou esculpidos, fotografia própria para o capítulo 05.</li>
+      <li>Vídeos finais 16:9 e 9:16 com trilha e sound design: montagem em Remotion ou editor, fora da página.</li>
+    </ul>
+  </section>
+
+  <section style="display: flex; flex-direction: column; gap: 14px;">
+    <h2 style="font-family: Italiana, Georgia, serif; font-weight: 400; font-size: 30px; color: #F1F0F4;">8 · Validação pendente</h2>
+    <ul>
+      <li>Conferir em aparelhos reais: 360 × 800, 390 × 844, 430 × 932 e 768 px (as pranchas rodam a página real em janelas desses tamanhos; a captura automática não enxerga dentro delas).</li>
+      <li>Medir FPS em Android intermediário e ajustar o perfil media (transmissão desligada por padrão no celular).</li>
+    </ul>
+  </section>
+</div>
+</x-dc>
+</body>
+</html>
