@@ -66,9 +66,11 @@ O storyboard dos dois formatos (16:9 e 9:16) está em `prototipo/Bruma V2 Handof
 
 - **Autoria das quatro fotografias do capítulo 05.** Ver `CREDITOS.md`: elas vieram da
   Unsplash e o autor ainda não foi confirmado. Resolver antes de tratar a página como final.
-- **Vídeo de demonstração.** Ainda não gravado. Quando existir, ele entra em
-  `media.somoskyber.com.br/portfolio/bruma/bruma-v1.mp4` e o card no site da Kyber passa a
-  ter `publicado: true`.
+
+O vídeo de demonstração **já está no ar** desde 02/09/2026, em
+`media.somoskyber.com.br/portfolio/bruma/bruma-v1.mp4` (1920 × 1080, 52 s, 13,7 MB, sem
+áudio), e o card no site da Kyber já aponta para ele. O storyboard que originou a gravação
+está em `prototipo/Bruma V2 Handoff.dc.html`.
 
 ## Histórico
 
